@@ -12,6 +12,10 @@
     "jquery": "^2.2.3",
     "react": "15.0.2",
     "react-dom": "15.0.2",
+    "react-infinite-scroll": "0.1.5",
+    "react-infinite-scroll-list": "github:predjo/react-infinite-scroll-list",
+    "react-infinite-scroller": "github:cassetterocks/react-infinite-scroller",
+    "react-masonry-component": "4.0.4",
     "react-router": "^2.4.0"
   },
   "devDependencies": {
