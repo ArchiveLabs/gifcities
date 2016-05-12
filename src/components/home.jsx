@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router';
 import jQuery from 'jquery';
 import Results from './results.jsx';
 import ResultsMasonry from './results-masonry.jsx';
+import ResultsPackery from './results-packery.jsx';
 import ResultsInfinite from './results-infinite.jsx';
 import Loader from './loader.jsx';
 
@@ -19,8 +20,11 @@ export default withRouter(
     handleChange(event) {
       this.setState({inputValue: event.target.value});
     },
-    handleSubmit() {
+    handleSubmit(e) {
       console.log('handle submit');
+      if (e !== undefined) {
+        e.preventDefault();
+      }
       this.setState({isLoading: true, results: []});
 
       // TODO change route
@@ -35,7 +39,7 @@ export default withRouter(
       jQuery.ajax({
         url: url,
       }).then((data) => {
-        console.log(data);
+        // console.log(data);
         this.setState({results: data, isLoading: false});
       }, () => {
         // TODO display error to user
@@ -63,14 +67,12 @@ export default withRouter(
                 className="search-input"
                 type="text"
               />
-              <img src="/assets/search.gif" onClick={this.handleSubmit} />
+              <img src="assets/search.gif" onClick={this.handleSubmit} />
             </div>
           </form>
           {loaderEl}
           <div className="results-wrapper">
-            <ResultsInfinite
-              results={this.state.results}
-            ></ResultsInfinite>
+            <ResultsPackery results={this.state.results} />
           </div>
         </div>
       )
