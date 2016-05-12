@@ -89,9 +89,18 @@ h1 { font-weight: lighter; }
 /*.search-button:hover { background-color: #4998f5; }*/
 /*.search-button:active { background-color: #2f74c4; }*/
 
+.loader {
+  text-align:center;
+  margin: 100px 32px 32px 32px;
+}
 .results-wrapper .loader {
   margin: 32px;
   /*position: fixed;*/
   /*top: 10px;*/
   /*left: 10px;*/
+}
+
+.VisibilitySensor {
+  background-color: red;
+  height: 100px;
 }

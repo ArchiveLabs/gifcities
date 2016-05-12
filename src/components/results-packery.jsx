@@ -32,19 +32,29 @@ export default React.createClass({
   onVisibillityChange(isVisible) {
     if (isVisible === true && this.state.offset < this.props.results.length) {
       this.setState({offset: this.state.offset + 40});
+      console.log(this.state.offset);
     }
   },
 
   render() {
     var children = this.props.results.slice(0, this.state.offset).map((row, idx) => {
-      var url = 'https://web.archive.org/web/' + row.gif;
-      return (
-        <div>
-          <a key={idx} href={row.page}>
+      if (row.page !== 'https://web.archive.org/') {
+        var url = 'https://web.archive.org/web/' + row.gif;
+        return (
+          <div>
+            <a key={idx} href={row.page}>
+              <img src={url} title={row.url_text} />
+            </a>
+          </div>
+        )
+      } else {
+        var url = 'https://web.archive.org/web/' + row.gif;
+        return (
+          <div>
             <img src={url} title={row.url_text} />
-          </a>
-        </div>
-      )
+          </div>
+        )
+      }
     });
     var stampEl;
     if (children.length > 0) {
@@ -60,7 +70,10 @@ export default React.createClass({
           {stampEl}
           {children}
         </Packery>
-        <VisibilitySensor onChange={this.onVisibillityChange} />
+        <VisibilitySensor
+          className="VisibilitySensor"
+          partialVisibility={true}
+          onChange={this.onVisibillityChange} />
       </div>
     );
   }

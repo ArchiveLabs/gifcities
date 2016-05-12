@@ -7,14 +7,19 @@ import ResultsPackery from './results-packery.jsx';
 import ResultsInfinite from './results-infinite.jsx';
 import Loader from './loader.jsx';
 
+// history stuff
+import { browserHistory, hashHistory } from 'react-router';
+import { createHashHistory } from 'history';
+import { useRouterHistory } from 'react-router';
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+
+
 // Note relies on this.props.params.id (set via react-router)
 export default withRouter(
   React.createClass({
-    getInitialState: function() {
+    getInitialState() {
       return {
-        inputValue: '',
-        results: [],
-        isLoading: false,
+        inputValue: this.props.params.query || '',
       };
     },
     handleChange(event) {
@@ -25,34 +30,14 @@ export default withRouter(
       if (e !== undefined) {
         e.preventDefault();
       }
-      this.setState({isLoading: true, results: []});
-
-      // TODO change route
-      var url;
-
-      // mock
-      // url = 'mock_data.json';
-      // live
-      url = '//vinay-dev.us.archive.org:8091/api/v1/gifsearch?q=';
-      url = url + encodeURIComponent(this.state.inputValue);
-
-      jQuery.ajax({
-        url: url,
-      }).then((data) => {
-        // console.log(data);
-        this.setState({results: data, isLoading: false});
-      }, () => {
-        // TODO display error to user
-        console.log('error fetching data');
-        this.setState({isLoading: false});
-      });
+      appHistory.push(this.state.inputValue);
+    },
+    componentWillReceiveProps(nextProps) {
+      if (this.props.params.query !== nextProps.params.query) {
+        this.setState({inputValue: nextProps.params.query});
+      }
     },
     render() {
-      // loader is while ajax is waiting
-      var loaderEl;
-      if (this.state.isLoading) {
-        loaderEl = (<Loader></Loader>);
-      }
       return (
         <div className="home">
           <form onSubmit={this.handleSubmit}>
@@ -70,10 +55,7 @@ export default withRouter(
               <img src="assets/search.gif" onClick={this.handleSubmit} />
             </div>
           </form>
-          {loaderEl}
-          <div className="results-wrapper">
-            <ResultsPackery results={this.state.results} />
-          </div>
+          {this.props.children}
         </div>
       )
     }
