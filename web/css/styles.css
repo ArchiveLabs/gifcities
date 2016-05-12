@@ -101,6 +101,6 @@ h1 { font-weight: lighter; }
 }
 
 .VisibilitySensor {
-  background-color: red;
+  /*background-color: red;*/
   height: 100px;
 }

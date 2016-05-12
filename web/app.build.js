@@ -41693,6 +41693,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var refName = 'packeryContainer';
 
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function () {
+    var context = this,
+        args = arguments;
+    var later = function later() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
+function throttle(fn, threshhold, scope) {
+  threshhold || (threshhold = 250);
+  var last, deferTimer;
+  return function () {
+    var context = scope || this;
+
+    var now = +new Date(),
+        args = arguments;
+    if (last && now < last + threshhold) {
+      // hold on to it
+      clearTimeout(deferTimer);
+      deferTimer = setTimeout(function () {
+        last = now;
+        fn.apply(context, args);
+      }, threshhold);
+    } else {
+      last = now;
+      fn.apply(context, args);
+    }
+  };
+}
+
 var _class = function (_React$Component) {
   _inherits(_class, _React$Component);
 
@@ -41775,30 +41813,50 @@ var _class = function (_React$Component) {
 
     _this.performLayout = function () {
       var diff = _this.diffDomChildren();
-
       if (diff.removed.length > 0) {
         _this.packery.remove(diff.removed);
       }
-
       if (diff.appended.length > 0) {
         _this.packery.appended(diff.appended);
         diff.appended.forEach(_this.makeEachDraggable);
       }
-
       if (diff.prepended.length > 0) {
         _this.packery.prepended(diff.prepended);
         diff.prepended.forEach(_this.makeEachDraggable);
       }
       _this.packery.reloadItems();
-      _this.packery.layout();
+      // this.packery.layout()
+      _this.doLayoutDebounced();
     };
+
+    _this.doLayoutDebounced = debounce(function () {
+      _this.packery.layout();
+    }, 1000);
+    _this.doLayoutTrottled = throttle(function () {
+      _this.packery.layout();
+      _this.doLayoutDebounced();
+    }, 250);
 
     _this.imagesLoaded = function () {
       if (_this.props.disableImagesLoaded) return;
 
-      (0, _imagesloaded2.default)(_this.refs[refName], function (instance) {
-        _this.packery.layout();
-      });
+      var ref = _this.refs[refName];
+      var images = ref.querySelectorAll('img');
+      for (var i = 0; i < images.length; i++) {
+        if (!images[i].complete) {
+          images[i].onload = function () {
+            _this.doLayoutTrottled();
+          };
+        }
+      }
+
+      // imagesloaded(
+      //     this.refs[refName],
+      //     (instance) => {
+      //         console.log('images are loaded');
+      //         this.packery.layout()
+      //     }
+      // )
     };
 
     _this.componentDidMount = function () {
@@ -41811,9 +41869,7 @@ var _class = function (_React$Component) {
       _this.imagesLoaded();
     };
 
-    _this.componentWillUnmount = function () {
-      clearTimeout(_this._timer);
-    };
+    _this.componentWillUnmount = function () {};
 
     _this.render = function () {
       return _react2.default.createElement(_this.props.elementType, {
@@ -42162,15 +42218,20 @@ var _reactVisibilitySensor = require('react-visibility-sensor');
 
 var _reactVisibilitySensor2 = _interopRequireDefault(_reactVisibilitySensor);
 
+var _loader = require('./loader.jsx');
+
+var _loader2 = _interopRequireDefault(_loader);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// var Packery = require('react-packery-component')(React);
+
 
 var options = {
   transitionDuration: 0,
   gutter: 60,
   stamp: '.stamp'
 };
-// var Packery = require('react-packery-component')(React);
-
 
 exports.default = _react2.default.createClass({
   displayName: 'results-packery',
@@ -42193,6 +42254,7 @@ exports.default = _react2.default.createClass({
     };
   },
   onVisibillityChange: function onVisibillityChange(isVisible) {
+    console.log('onVisibillityChange', isVisible);
     if (isVisible === true && this.state.offset < this.props.results.length) {
       this.setState({ offset: this.state.offset + 40 });
       console.log(this.state.offset);
@@ -42224,6 +42286,10 @@ exports.default = _react2.default.createClass({
     if (children.length > 0) {
       stampEl = _react2.default.createElement('div', { ref: 'stamp', className: 'stamp' });
     }
+    var loader;
+    if (this.state.offset < this.props.results.length) {
+      loader = _react2.default.createElement(_loader2.default, { loaderIndex: 1 });
+    }
     return _react2.default.createElement(
       'div',
       null,
@@ -42237,15 +42303,19 @@ exports.default = _react2.default.createClass({
         stampEl,
         children
       ),
-      _react2.default.createElement(_reactVisibilitySensor2.default, {
-        className: 'VisibilitySensor',
-        partialVisibility: true,
-        onChange: this.onVisibillityChange })
+      _react2.default.createElement(
+        'div',
+        { className: 'VisibilitySensor' },
+        loader,
+        _react2.default.createElement(_reactVisibilitySensor2.default, {
+          partialVisibility: false,
+          onChange: this.onVisibillityChange })
+      )
     );
   }
 });
 
-},{"./custom-packery.jsx":260,"react":256,"react-router":110,"react-visibility-sensor":118}],266:[function(require,module,exports){
+},{"./custom-packery.jsx":260,"./loader.jsx":262,"react":256,"react-router":110,"react-visibility-sensor":118}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

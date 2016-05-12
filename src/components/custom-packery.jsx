@@ -6,6 +6,44 @@ import imagesloaded from 'imagesloaded'
 
 const refName = 'packeryContainer'
 
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
+
+function throttle(fn, threshhold, scope) {
+  threshhold || (threshhold = 250);
+  var last,
+      deferTimer;
+  return function () {
+    var context = scope || this;
+
+    var now = +new Date,
+        args = arguments;
+    if (last && now < last + threshhold) {
+      // hold on to it
+      clearTimeout(deferTimer);
+      deferTimer = setTimeout(function () {
+        last = now;
+        fn.apply(context, args);
+      }, threshhold);
+    } else {
+      last = now;
+      fn.apply(context, args);
+    }
+  };
+}
+
 export default class extends React.Component {
 
   propTypes = {
@@ -107,33 +145,52 @@ export default class extends React.Component {
 
   performLayout = () => {
     const diff = this.diffDomChildren()
-
     if (diff.removed.length > 0) {
         this.packery.remove(diff.removed)
     }
-
     if (diff.appended.length > 0) {
         this.packery.appended(diff.appended)
         diff.appended.forEach( this.makeEachDraggable )
     }
-
     if (diff.prepended.length > 0) {
         this.packery.prepended(diff.prepended)
         diff.prepended.forEach( this.makeEachDraggable )
     }
     this.packery.reloadItems()
-    this.packery.layout()
+    // this.packery.layout()
+    this.doLayoutDebounced();
   }
+
+  doLayoutDebounced = debounce(() => {
+    this.packery.layout();
+  }, 1000);
+
+  doLayoutTrottled = throttle(() => {
+    this.packery.layout();
+    this.doLayoutDebounced();
+  }, 250);
 
   imagesLoaded = () => {
     if (this.props.disableImagesLoaded) return
 
-    imagesloaded(
-        this.refs[refName],
-        (instance) => {
-            this.packery.layout()
+    var ref = this.refs[refName];
+    var images = ref.querySelectorAll('img');
+    for (var i = 0; i < images.length; i++) {
+      if ( ! images[i].complete) {
+        images[i].onload = () => {
+          this.doLayoutTrottled();
         }
-    )
+      }
+    }
+
+
+    // imagesloaded(
+    //     this.refs[refName],
+    //     (instance) => {
+    //         console.log('images are loaded');
+    //         this.packery.layout()
+    //     }
+    // )
   }
 
   componentDidMount = () => {
@@ -147,7 +204,6 @@ export default class extends React.Component {
   }
 
   componentWillUnmount = () => {
-    clearTimeout(this._timer)
   }
 
   render = () => {

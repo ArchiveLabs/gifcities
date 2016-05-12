@@ -3,6 +3,7 @@ import React from 'react';
 import Packery from './custom-packery.jsx';
 // var Packery = require('react-packery-component')(React);
 import VisibilitySensor from 'react-visibility-sensor';
+import Loader from './loader.jsx';
 
 
 var options = {
@@ -30,6 +31,7 @@ export default React.createClass({
     };
   },
   onVisibillityChange(isVisible) {
+    console.log('onVisibillityChange', isVisible);
     if (isVisible === true && this.state.offset < this.props.results.length) {
       this.setState({offset: this.state.offset + 40});
       console.log(this.state.offset);
@@ -60,6 +62,10 @@ export default React.createClass({
     if (children.length > 0) {
       stampEl = (<div ref="stamp" className="stamp"></div>);
     }
+    var loader;
+    if (this.state.offset < this.props.results.length) {
+      loader = <Loader loaderIndex={1}></Loader>;
+    }
     return (
       <div>
         <Packery
@@ -70,10 +76,13 @@ export default React.createClass({
           {stampEl}
           {children}
         </Packery>
-        <VisibilitySensor
-          className="VisibilitySensor"
-          partialVisibility={true}
-          onChange={this.onVisibillityChange} />
+        <div className="VisibilitySensor">
+          {loader}
+          <VisibilitySensor
+            partialVisibility={false}
+            onChange={this.onVisibillityChange} />
+        </div>
+
       </div>
     );
   }
