@@ -20,7 +20,9 @@ export default React.createClass({
          "gif": "20091019045002/http://www.geocities.com/jiffyjamz/StArTrEk/NeWtReKsPiNnA.gif",
          "checksum": "HUIJLTACP3HITNMU6GTNQVHE2WJLDAJ4",
          "page": "https://web.archive.org/web/20091022020929/http://geocities.com/mrjiffyjamz/BOSTON/NEPATRiOTS/FAMERPATZ.html",
-         "url_text": "jiffy jamz star trek new trek spinna"
+         "url_text": "jiffy jamz star trek new trek spinna",
+         "width: "..."
+         height: "..."
        },]
      */
     results: React.PropTypes.array,
@@ -40,22 +42,18 @@ export default React.createClass({
 
   render() {
     var children = this.props.results.slice(0, this.state.offset).map((row, idx) => {
+      var url = 'https://web.archive.org/web/' + row.gif;
+      var img = <img src={url} title={row.url_text} width={row.width} height={row.height} />;
       if (row.page !== 'https://web.archive.org/') {
-        var url = 'https://web.archive.org/web/' + row.gif;
         return (
           <div>
             <a key={idx} href={row.page}>
-              <img src={url} title={row.url_text} />
+              {img}
             </a>
           </div>
         )
       } else {
-        var url = 'https://web.archive.org/web/' + row.gif;
-        return (
-          <div>
-            <img src={url} title={row.url_text} />
-          </div>
-        )
+        return <div>{img}</div>;
       }
     });
     var stampEl;

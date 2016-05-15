@@ -42243,7 +42243,9 @@ exports.default = _react2.default.createClass({
          "gif": "20091019045002/http://www.geocities.com/jiffyjamz/StArTrEk/NeWtReKsPiNnA.gif",
          "checksum": "HUIJLTACP3HITNMU6GTNQVHE2WJLDAJ4",
          "page": "https://web.archive.org/web/20091022020929/http://geocities.com/mrjiffyjamz/BOSTON/NEPATRiOTS/FAMERPATZ.html",
-         "url_text": "jiffy jamz star trek new trek spinna"
+         "url_text": "jiffy jamz star trek new trek spinna",
+         "width: "..."
+         height: "..."
        },]
      */
     results: _react2.default.PropTypes.array
@@ -42262,23 +42264,23 @@ exports.default = _react2.default.createClass({
   },
   render: function render() {
     var children = this.props.results.slice(0, this.state.offset).map(function (row, idx) {
+      var url = 'https://web.archive.org/web/' + row.gif;
+      var img = _react2.default.createElement('img', { src: url, title: row.url_text, width: row.width, height: row.height });
       if (row.page !== 'https://web.archive.org/') {
-        var url = 'https://web.archive.org/web/' + row.gif;
         return _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(
             'a',
             { key: idx, href: row.page },
-            _react2.default.createElement('img', { src: url, title: row.url_text })
+            img
           )
         );
       } else {
-        var url = 'https://web.archive.org/web/' + row.gif;
         return _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('img', { src: url, title: row.url_text })
+          img
         );
       }
     });
