@@ -146,7 +146,10 @@ export default withRouter(
       return (
         <div className="live-results">
           <h1>Live: "{this.state.inputValue}"</h1>
-          <SearchResultsComponent query={this.state.inputValue} notrack={true} />
+          <SearchResultsComponent
+            query={this.state.inputValue}
+            notrack={true}
+            randomize={true} />
         </div>
       )
     }

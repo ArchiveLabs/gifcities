@@ -31,6 +31,12 @@ export default withRouter(
         url: url,
       }).then((data) => {
         // console.log(data);
+        if (this.props.randomize === true) {
+          // randomize data!
+          data.sort(function() {
+            return .5 - Math.random();
+          });
+        }
         this.setState({results: data, isLoading: false});
       }, () => {
         // TODO display error to user

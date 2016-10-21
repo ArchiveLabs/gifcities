@@ -42192,7 +42192,10 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
         this.state.inputValue,
         '"'
       ),
-      _react2.default.createElement(_searchResults2.default, { query: this.state.inputValue, notrack: true })
+      _react2.default.createElement(_searchResults2.default, {
+        query: this.state.inputValue,
+        notrack: true,
+        randomize: true })
     );
   }
 }));
@@ -42724,6 +42727,12 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
       url: url
     }).then(function (data) {
       // console.log(data);
+      if (_this.props.randomize === true) {
+        // randomize data!
+        data.sort(function () {
+          return .5 - Math.random();
+        });
+      }
       _this.setState({ results: data, isLoading: false });
     }, function () {
       // TODO display error to user
