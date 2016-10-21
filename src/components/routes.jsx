@@ -5,6 +5,8 @@ import {
 import RootComponent from './root.jsx';
 import HomeComponent from './home.jsx';
 import SearchResultsComponent from './search-results.jsx';
+import LiveResultsComponent from './live-results.jsx';
+
 
 import { createHashHistory } from 'history';
 import { useRouterHistory } from 'react-router';
@@ -16,6 +18,7 @@ const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 export default (
   <Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
     <Route path="/" component={RootComponent}>
+      <Route path="/live" component={LiveResultsComponent}></Route>
       <Route path="/" component={HomeComponent}>
         <Route path="/:query" component={SearchResultsComponent}/>
       </Route>

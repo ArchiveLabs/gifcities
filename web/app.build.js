@@ -41656,7 +41656,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Plug React into DOM
 (0, _reactDom.render)(_routes2.default, document.getElementById('app'));
 
-},{"./components/routes.jsx":268,"react-dom":78}],260:[function(require,module,exports){
+},{"./components/routes.jsx":269,"react-dom":78}],260:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41998,7 +41998,206 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
   }
 }));
 
-},{"./loader.jsx":262,"./results-infinite.jsx":263,"./results-masonry.jsx":264,"./results-packery.jsx":265,"./results.jsx":266,"history":54,"jquery":62,"react":256,"react-router":110}],262:[function(require,module,exports){
+},{"./loader.jsx":263,"./results-infinite.jsx":264,"./results-masonry.jsx":265,"./results-packery.jsx":266,"./results.jsx":267,"history":54,"jquery":62,"react":256,"react-router":110}],262:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _results = require('./results.jsx');
+
+var _results2 = _interopRequireDefault(_results);
+
+var _resultsMasonry = require('./results-masonry.jsx');
+
+var _resultsMasonry2 = _interopRequireDefault(_resultsMasonry);
+
+var _resultsPackery = require('./results-packery.jsx');
+
+var _resultsPackery2 = _interopRequireDefault(_resultsPackery);
+
+var _resultsInfinite = require('./results-infinite.jsx');
+
+var _resultsInfinite2 = _interopRequireDefault(_resultsInfinite);
+
+var _loader = require('./loader.jsx');
+
+var _loader2 = _interopRequireDefault(_loader);
+
+var _searchResults = require('./search-results.jsx');
+
+var _searchResults2 = _interopRequireDefault(_searchResults);
+
+var _history = require('history');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var appHistory = (0, _reactRouter.useRouterHistory)(_history.createHashHistory)({ queryKey: false });
+
+// Note relies on this.props.params.id (set via react-router)
+
+
+// history stuff
+exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
+  componentWillMount: function componentWillMount() {
+    var _this = this;
+
+    this.loadMore = this.loadMore.bind(this);
+    this.updateQueueIndex = this.updateQueueIndex.bind(this);
+    this.initIntervals = this.initIntervals.bind(this);
+
+    this.loadMore(this.updateQueueIndex);
+    this.initIntervals();
+
+    (0, _jquery2.default)(document).keydown(function (key) {
+      // console.log(key.which);
+      switch (key.which) {
+        case 88:
+          // x
+          console.log('resetting');
+          _this.resetQueue();
+          break;
+        case 39:
+          // right arrow
+          console.log('skipping');
+          _this.initIntervals();
+          _this.updateQueueIndex();
+          break;
+        default:
+          console.log('x: reset, right-arrow: skipping');
+          break;
+      }
+    });
+  },
+  initIntervals: function initIntervals() {
+    if (this.loadMoreInterval) {
+      clearInterval(this.loadMoreInterval);
+    }
+    if (this.updateQueueInterval) {
+      clearInterval(this.updateQueueInterval);
+    }
+    this.loadMoreInterval = setInterval(this.loadMore, 10000);
+    this.updateQueueInterval = setInterval(this.updateQueueIndex, 10000);
+  },
+  getInitialState: function getInitialState() {
+    this.time = null;
+    this.count = 0;
+    this.queue = ['snow globe'];
+    this.mostRecent = [];
+    this.mostRecentMax = 10;
+
+    var inputValue;
+    if (this.queue.length > 0) {
+      inputValue = this.queue.shift();
+    } else {
+      inputValue = '';
+    }
+    return {
+      inputValue: inputValue
+    };
+  },
+  resetQueue: function resetQueue() {
+    this.queue = [];
+    this.mostRecent = [];
+    this.time = null;
+    this.count = 0;
+    this.initIntervals();
+  },
+  initQueueState: function initQueueState(callback) {
+    var _this2 = this;
+
+    // get initial clock
+    if (this.time === null) {
+      var initUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=status';
+      _jquery2.default.getJSON(initUrl).then(function (data) {
+        _this2.time = data.time;
+        _this2.count = data.count;
+        callback(true);
+      }, function () {
+        callback(false);
+      });
+    }
+  },
+  loadMore: function loadMore(callback) {
+    var _this3 = this;
+
+    if (!callback) {
+      callback = function callback() {};
+    }
+
+    // Do Ajax
+    if (this.time === null) {
+      this.initQueueState(function (result) {
+        if (result === true) {
+          _this3.loadMore(callback);
+        } else {
+          alert('There was an error accessing the API');
+        }
+      });
+    } else {
+      // live
+      var moreUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=list&start=' + this.time;
+      _jquery2.default.getJSON(moreUrl).then(function (data) {
+        if (data.length > 0) {
+          _this3.time = data[data.length - 1].split('|')[0];
+          _this3.time = Number(_this3.time) + 1; // Note we add 1 to get results "after"
+          data.forEach(function (row, index) {
+            var val = row.split('|')[1];
+            if (_this3.mostRecent.indexOf(val) === -1) {
+              _this3.queue.push(val);
+              _this3.mostRecent.push(val);
+              if (_this3.mostRecent.length > _this3.mostRecentMax) {
+                _this3.mostRecent.shift();
+              }
+            }
+          });
+          callback();
+        }
+      });
+    }
+  },
+  updateQueueIndex: function updateQueueIndex() {
+    if (this.queue.length > 0) {
+      var inputValue = this.queue.shift();
+      this.setState({ inputValue: inputValue });
+    }
+  },
+
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.query !== nextProps.query) {
+  //     this.setState({inputValue: nextProps.query});
+  //   }
+  // },
+  componentWillUnmount: function componentWillUnmount() {},
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'live-results' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        'Live: "',
+        this.state.inputValue,
+        '"'
+      ),
+      _react2.default.createElement(_searchResults2.default, { query: this.state.inputValue, notrack: true })
+    );
+  }
+}));
+
+},{"./loader.jsx":263,"./results-infinite.jsx":264,"./results-masonry.jsx":265,"./results-packery.jsx":266,"./results.jsx":267,"./search-results.jsx":270,"history":54,"jquery":62,"react":256,"react-router":110}],263:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42024,7 +42223,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256}],263:[function(require,module,exports){
+},{"react":256}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42128,7 +42327,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"./loader.jsx":262,"react":256,"react-infinite-scroller":79,"react-router":110}],264:[function(require,module,exports){
+},{"./loader.jsx":263,"react":256,"react-infinite-scroller":79,"react-router":110}],265:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42197,7 +42396,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256,"react-masonry-component":80,"react-router":110}],265:[function(require,module,exports){
+},{"react":256,"react-masonry-component":80,"react-router":110}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42317,7 +42516,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"./custom-packery.jsx":260,"./loader.jsx":262,"react":256,"react-router":110,"react-visibility-sensor":118}],266:[function(require,module,exports){
+},{"./custom-packery.jsx":260,"./loader.jsx":263,"react":256,"react-router":110,"react-visibility-sensor":118}],267:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42374,7 +42573,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256,"react-router":110}],267:[function(require,module,exports){
+},{"react":256,"react-router":110}],268:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42405,7 +42604,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256,"react-router":110}],268:[function(require,module,exports){
+},{"react":256,"react-router":110}],269:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42430,6 +42629,10 @@ var _searchResults = require('./search-results.jsx');
 
 var _searchResults2 = _interopRequireDefault(_searchResults);
 
+var _liveResults = require('./live-results.jsx');
+
+var _liveResults2 = _interopRequireDefault(_liveResults);
+
 var _history = require('history');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42447,6 +42650,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(
     _reactRouter.Route,
     { path: '/', component: _root2.default },
+    _react2.default.createElement(_reactRouter.Route, { path: '/live', component: _liveResults2.default }),
     _react2.default.createElement(
       _reactRouter.Route,
       { path: '/', component: _home2.default },
@@ -42456,7 +42660,7 @@ exports.default = _react2.default.createElement(
   )
 );
 
-},{"./home.jsx":261,"./root.jsx":267,"./search-results.jsx":269,"history":54,"react":256,"react-router":110}],269:[function(require,module,exports){
+},{"./home.jsx":261,"./live-results.jsx":262,"./root.jsx":268,"./search-results.jsx":270,"history":54,"react":256,"react-router":110}],270:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42508,12 +42712,13 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
 
     this.setState({ isLoading: true, results: [] });
 
-    // mock
-    // var url = 'mock_data.json';
-
     // live
     var url = '//vinay-dev.us.archive.org:8091/api/v1/gifsearch?q=';
     url = url + encodeURIComponent(query);
+
+    if (this.props.notrack === true) {
+      url = url + '&notrack=1';
+    }
 
     _jquery2.default.ajax({
       url: url
@@ -42527,10 +42732,18 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
     });
   },
   componentDidMount: function componentDidMount() {
-    this.loadResults(this.props.params.query);
+    var query;
+    if (this.props.query) {
+      query = this.props.query;
+    } else {
+      query = this.props.params.query;
+    }
+    this.loadResults(query);
   },
   componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    if (this.props.params.query !== nextProps.params.query) {
+    if (this.props.query !== nextProps.query) {
+      this.loadResults(nextProps.query);
+    } else if (this.props.params && this.props.params.query !== nextProps.params.query) {
       this.loadResults(nextProps.params.query);
     }
   },
@@ -42549,4 +42762,4 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
   }
 }));
 
-},{"./loader.jsx":262,"./results-infinite.jsx":263,"./results-masonry.jsx":264,"./results-packery.jsx":265,"./results.jsx":266,"jquery":62,"react":256,"react-router":110}]},{},[259]);
+},{"./loader.jsx":263,"./results-infinite.jsx":264,"./results-masonry.jsx":265,"./results-packery.jsx":266,"./results.jsx":267,"jquery":62,"react":256,"react-router":110}]},{},[259]);

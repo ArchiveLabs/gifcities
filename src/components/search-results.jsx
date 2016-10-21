@@ -19,12 +19,13 @@ export default withRouter(
     loadResults(query) {
       this.setState({isLoading: true, results: []});
 
-      // mock
-      // var url = 'mock_data.json';
-
       // live
       var url = '//vinay-dev.us.archive.org:8091/api/v1/gifsearch?q=';
       url = url + encodeURIComponent(query);
+
+      if (this.props.notrack === true) {
+        url = url + '&notrack=1'
+      }
 
       jQuery.ajax({
         url: url,
@@ -38,10 +39,18 @@ export default withRouter(
       });
     },
     componentDidMount() {
-      this.loadResults(this.props.params.query);
+      var query;
+      if (this.props.query) {
+        query = this.props.query;
+      } else {
+        query = this.props.params.query;
+      }
+      this.loadResults(query);
     },
     componentWillReceiveProps(nextProps) {
-      if (this.props.params.query !== nextProps.params.query) {
+      if (this.props.query !== nextProps.query) {
+        this.loadResults(nextProps.query);
+      } else if (this.props.params && this.props.params.query !== nextProps.params.query) {
         this.loadResults(nextProps.params.query);
       }
     },
