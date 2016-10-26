@@ -7,6 +7,8 @@ import ResultsPackery from './results-packery.jsx';
 import ResultsInfinite from './results-infinite.jsx';
 import Loader from './loader.jsx';
 import SearchResultsComponent from './search-results.jsx';
+import TitleText from './title-text.jsx';
+
 
 
 // history stuff
@@ -52,25 +54,26 @@ export default withRouter(
       if (this.updateQueueInterval) {
         clearInterval(this.updateQueueInterval);
       }
-      this.loadMoreInterval = setInterval(this.loadMore, 10000);
+      this.loadMoreInterval = setInterval(() => {
+        var prevQueueLength = this.queue.length;
+        this.loadMore(() => {
+          if (prevQueueLength === 0 && this.queue.length > 0) {
+            this.immediatelyShowQueue();
+          }
+        });
+      }, 4500);
       this.updateQueueInterval = setInterval(this.updateQueueIndex, 10000);
     },
     getInitialState() {
       this.time = null;
       this.count = 0;
-      this.queue = ['snow globe'];
+      this.queue = [];
       this.mostRecent = [];
       this.mostRecentMax = 10;
-
-      var inputValue;
-      if (this.queue.length > 0) {
-        inputValue = this.queue.shift();
-      } else {
-        inputValue = '';
-      }
-      return {
-        inputValue: inputValue
-      };
+      this.idleQueue = [];
+      this.popularIndex = 0;
+      this.popularQueue = ['birthday',];
+      return this.getQueueIndexState();
     },
     resetQueue() {
       this.queue = [];
@@ -79,19 +82,34 @@ export default withRouter(
       this.count = 0;
       this.initIntervals();
     },
+    immediatelyShowQueue() {
+      this.updateQueueIndex();
+      this.initIntervals();
+    },
+
     initQueueState(callback) {
       // get initial clock
-      if (this.time === null) {
-        var initUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=status';
-        jQuery.getJSON(initUrl).then((data) => {
-          this.time = data.time;
-          this.count = data.count;
-          callback(true);
-        }, () => {
-          callback(false);
+      var initUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=status';
+      jQuery.getJSON(initUrl).then((data) => {
+        this.time = data.time;
+        this.count = data.count;
+        callback(true);
+      }, () => {
+        callback(false);
+      });
+      // Fetch popular queries
+      var popularUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=popular&num=100';
+      jQuery.getJSON(popularUrl).then((data) => {
+        data.forEach((row, idx) => {
+          if (this.popularQueue.indexOf(row[0] === -1)) {
+            this.popularQueue.push(row[0]);
+          }
         });
-      }
+      });
     },
+    /**
+     * Load more from the API
+     */
     loadMore(callback) {
       if (!callback) { callback = function(){}; }
 
@@ -105,7 +123,7 @@ export default withRouter(
           }
         })
       } else {
-        // live
+        // download latest live results
         var moreUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=list&start=' + this.time;
         jQuery.getJSON(moreUrl).then((data) => {
           if (data.length > 0) {
@@ -127,25 +145,53 @@ export default withRouter(
       }
     },
 
-    updateQueueIndex() {
+    getQueueIndexState() {
+      var inputValue, isUsingPopluar = false;
       if (this.queue.length > 0) {
-        var inputValue = this.queue.shift();
-        this.setState({inputValue: inputValue});
+        inputValue = this.queue.shift();
+      } else if (this.idleQueue > 0) {
+        inputValue = this.idleQueue.shift();
+      } else {
+        this.popularIndex = (this.popularIndex + 1) % this.popularQueue.length;
+        inputValue = this.popularQueue[this.popularIndex];
+        isUsingPopluar = true;
       }
+      return {
+        inputValue: inputValue,
+        isUsingPopluar: isUsingPopluar
+      };
     },
 
-    // componentWillReceiveProps(nextProps) {
-    //   if (this.props.query !== nextProps.query) {
-    //     this.setState({inputValue: nextProps.query});
-    //   }
-    // },
+    updateQueueIndex() {
+      this.setState(this.getQueueIndexState());
+    },
+
     componentWillUnmount() {
 
     },
     render() {
       return (
         <div className="live-results">
-          <h1>Live: "{this.state.inputValue}"</h1>
+          <h1 className="live-h1">
+            <img
+              src="assets/discolp.gif"
+              alt="popular"
+              style={{
+                display: this.state.isUsingPopluar ? 'inline-block' : 'none'
+              }}
+            />
+            <img
+              src="assets/pgonair.gif"
+              alt="on air"
+              style={{
+                display: this.state.isUsingPopluar ? 'none' : 'inline-block'
+              }}
+            />
+            <span className="title-text-wrapper">
+              <TitleText value={this.state.inputValue} />
+            </span>
+          </h1>
+
           <SearchResultsComponent
             query={this.state.inputValue}
             notrack={true}

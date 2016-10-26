@@ -37,24 +37,42 @@ export default withRouter(
         this.setState({inputValue: nextProps.params.query});
       }
     },
+    renderHomeText() {
+      return (
+        <div>
+          <h1>GifCities<br/>
+  The Geocities Animated GIF Search Engine</h1>
+          <br/>
+          A Project of<br/>
+        <img src="https://web.archive.org/web/20090829162203/http://geocities.com/Athens/Forum/7243/Internet.gif" />
+        <img src="https://web.archive.org/web/20090831021236/http://www.geocities.com/diabloiixpacfaq/archive.gif" />
+          <p>GifCities is a special project of the Internet Archive to celebrate 20 years of preserving the web. Internet Archive is a non-profit digital library of millions of free books, movies, software, music, websites, and more. Please donate to help us in our efforts to provide “Universal Access to All Knowledge.”</p>
+        </div>
+      );
+    },
     render() {
+      var homeText;
+      if (this.state.inputValue === '') {
+        homeText = this.renderHomeText();
+      }
       return (
         <div className="home">
           <form onSubmit={this.handleSubmit}>
             <div className="search-box-wrapper">
-              {/*<img
-                className="search-icon"
-                src="assets/search-blue.svg"
-              />*/}
-              <input
-                value={this.state.inputValue}
-                onChange={this.handleChange}
-                className="search-input"
-                type="text"
-              />
-              <img src="assets/search.gif" onClick={this.handleSubmit} />
+              <div className="search-input-wrapper">
+                <input
+                  value={this.state.inputValue}
+                  onChange={this.handleChange}
+                  className="search-input"
+                  type="text"
+                />
+              </div>
+              <div className="search-img-wrapper">
+                <img src="assets/search.gif" onClick={this.handleSubmit} />
+              </div>
             </div>
           </form>
+          {homeText}
           {this.props.children}
         </div>
       )

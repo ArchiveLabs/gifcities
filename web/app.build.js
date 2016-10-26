@@ -41656,7 +41656,106 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Plug React into DOM
 (0, _reactDom.render)(_routes2.default, document.getElementById('app'));
 
-},{"./components/routes.jsx":269,"react-dom":78}],260:[function(require,module,exports){
+},{"./components/routes.jsx":271,"react-dom":78}],260:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRouter = require('react-router');
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _react2.default.createClass({
+  displayName: 'about',
+
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'about' },
+      'Gifcities: The Geocities Animated Gif Search Engine was a special project of the Internet Archive done as part of our 20th Anniversary to highlight and celebrate fun aspects of the amazing history of the web as represented in the web archive and the Wayback Machine.',
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('br', null),
+      'Geocities was an early web hosting service, started in 1994 and acquired by Yahoo in 1999, with which users could create their own custom websites. The platform hosted over 38 million user-built pages and was at one time the third most visited site on the web. In 2009, Yahoo announced it was closing down the service, at which point the Internet Archive attempted to archive as much of the content as possible. More information on Geocities can be found on the related Wikipedia page: ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://en.wikipedia.org/wiki/Yahoo!_GeoCities' },
+        'https://en.wikipedia.org/wiki/Yahoo!_GeoCities'
+      ),
+      '. For the Gifcities project, we used the Internet Archive’s Geocities Closing Crawl (',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://archive.org/details/geocities&tab=about' },
+        'https://archive.org/details/geocities&tab=about'
+      ),
+      '). More about the project is at ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://archive.org/web/geocities.php' },
+        'https://archive.org/web/geocities.php'
+      ),
+      '.',
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('br', null),
+      'Mining this collection, we extracted over 4,500,000 animated GIFs (1,600,000 unique images) and then used the filenames and directory path text to build a best-effort “full text” search engine. Each GIF also links back to the original Geocities page on which it was embedded (and some of these pages are even more awesome than the GIFs).',
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('br', null),
+      'The Geocities web archive has been explored by other projects. The Internet Archive’s own Jason Scott has highlighted “Under Construction” Geocities GIFs (',
+      _react2.default.createElement(
+        'a',
+        { href: 'http://www.textfiles.com/underconstruction/' },
+        'http://www.textfiles.com/underconstruction/'
+      ),
+      '), librarians at North Carolina State University had been interested in Geocities GIFs for use in their data visualization lab (see the demo at ',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://archive.org/details/HallofGifs' },
+        'https://archive.org/details/HallofGifs'
+      ),
+      '), and researchers such as Ian Milligan had been data mining the full Geocities web archive to explore community formation(',
+      _react2.default.createElement(
+        'a',
+        { href: 'https://ianmilligan.ca/2015/03/25/herrenhausen-big-data-lightning-talk-finding-community-in-the-ruins-of-geocities' },
+        'https://ianmilligan.ca/2015/03/25/herrenhausen-big-data-lightning-talk-finding-community-in-the-ruins-of-geocities/'
+      ),
+      ').',
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('br', null),
+      'Thanks for the project go first and foremost to the millions of everyday citizens that built such incredible pages and GIFs in Geocities. We also owe special thanks to Yahoo for their guidance and open communication about the GeoCities closure. We also thank the independent volunteer team of archivers at ',
+      _react2.default.createElement(
+        'a',
+        { href: 'http://archiveteam.org/' },
+        'Archive Team'
+      ),
+      ' for their efforts to ',
+      _react2.default.createElement(
+        'a',
+        { href: 'http://archiveteam.org/index.php?title=Geocities' },
+        'preserve GeoCities'
+      ),
+      ' and ',
+      _react2.default.createElement(
+        'a',
+        { href: 'http://archiveteam.org/index.php?title=Geocities_URL_Lists' },
+        'contribute URL surveys'
+      ),
+      ' to the project. Thanks go as well to the efforts of the tireless Internet Archive staff that work to archive and make accessible our ongoing work to preserve the web for both today’s users and for posterity.',
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('br', null),
+      'The Internet Archive Gifcities project team was: Vinay Goel (Senior Data Engineer,) Jefferson Bailey (Director, Web Archiving), and Richard Caceres (Software Engineer).',
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('br', null),
+      'Now go look at some awesome early web GIFs!'
+    );
+  }
+});
+
+},{"react":256,"react-router":110}],261:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41906,7 +42005,66 @@ var _class = function (_React$Component) {
 
 exports.default = _class;
 
-},{"imagesloaded":60,"packery":70,"react":256,"react-dom":78}],261:[function(require,module,exports){
+},{"imagesloaded":60,"packery":70,"react":256,"react-dom":78}],262:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRouter = require('react-router');
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _react2.default.createClass({
+  displayName: 'header',
+
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'header' },
+      _react2.default.createElement(
+        'div',
+        { className: 'links' },
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/' },
+          'GifCities.org'
+        ),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/about-gifcities' },
+          'About'
+        ),
+        _react2.default.createElement(
+          'a',
+          { target: '_blank', href: 'https://archive.org/donate/' },
+          'Donate'
+        )
+      ),
+      _react2.default.createElement('div', { className: 'ia-logo' }),
+      _react2.default.createElement(
+        'div',
+        { className: 'floating-link' },
+        _react2.default.createElement(
+          'a',
+          { href: 'https://archive.org/donate/', target: '_blank' },
+          _react2.default.createElement('img', {
+            src: 'https://web.archive.org/web/20090804113154/http://geocities.com/SunsetStrip/Lounge/7650/dollarspindownd.gif',
+            alt: 'donate',
+            title: 'Donate to the Internet Archive'
+          })
+        )
+      )
+    );
+  }
+});
+
+},{"react":256,"react-router":110}],263:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41974,7 +42132,34 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
       this.setState({ inputValue: nextProps.params.query });
     }
   },
+  renderHomeText: function renderHomeText() {
+    return _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'h1',
+        null,
+        'GifCities',
+        _react2.default.createElement('br', null),
+        'The Geocities Animated GIF Search Engine'
+      ),
+      _react2.default.createElement('br', null),
+      'A Project of',
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('img', { src: 'https://web.archive.org/web/20090829162203/http://geocities.com/Athens/Forum/7243/Internet.gif' }),
+      _react2.default.createElement('img', { src: 'https://web.archive.org/web/20090831021236/http://www.geocities.com/diabloiixpacfaq/archive.gif' }),
+      _react2.default.createElement(
+        'p',
+        null,
+        'GifCities is a special project of the Internet Archive to celebrate 20 years of preserving the web. Internet Archive is a non-profit digital library of millions of free books, movies, software, music, websites, and more. Please donate to help us in our efforts to provide “Universal Access to All Knowledge.”'
+      )
+    );
+  },
   render: function render() {
+    var homeText;
+    if (this.state.inputValue === '') {
+      homeText = this.renderHomeText();
+    }
     return _react2.default.createElement(
       'div',
       { className: 'home' },
@@ -41984,21 +42169,30 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
         _react2.default.createElement(
           'div',
           { className: 'search-box-wrapper' },
-          _react2.default.createElement('input', {
-            value: this.state.inputValue,
-            onChange: this.handleChange,
-            className: 'search-input',
-            type: 'text'
-          }),
-          _react2.default.createElement('img', { src: 'assets/search.gif', onClick: this.handleSubmit })
+          _react2.default.createElement(
+            'div',
+            { className: 'search-input-wrapper' },
+            _react2.default.createElement('input', {
+              value: this.state.inputValue,
+              onChange: this.handleChange,
+              className: 'search-input',
+              type: 'text'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'search-img-wrapper' },
+            _react2.default.createElement('img', { src: 'assets/search.gif', onClick: this.handleSubmit })
+          )
         )
       ),
+      homeText,
       this.props.children
     );
   }
 }));
 
-},{"./loader.jsx":263,"./results-infinite.jsx":264,"./results-masonry.jsx":265,"./results-packery.jsx":266,"./results.jsx":267,"history":54,"jquery":62,"react":256,"react-router":110}],262:[function(require,module,exports){
+},{"./loader.jsx":265,"./results-infinite.jsx":266,"./results-masonry.jsx":267,"./results-packery.jsx":268,"./results.jsx":269,"history":54,"jquery":62,"react":256,"react-router":110}],264:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42038,6 +42232,10 @@ var _loader2 = _interopRequireDefault(_loader);
 var _searchResults = require('./search-results.jsx');
 
 var _searchResults2 = _interopRequireDefault(_searchResults);
+
+var _titleText = require('./title-text.jsx');
+
+var _titleText2 = _interopRequireDefault(_titleText);
 
 var _history = require('history');
 
@@ -42081,31 +42279,34 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
     });
   },
   initIntervals: function initIntervals() {
+    var _this2 = this;
+
     if (this.loadMoreInterval) {
       clearInterval(this.loadMoreInterval);
     }
     if (this.updateQueueInterval) {
       clearInterval(this.updateQueueInterval);
     }
-    this.loadMoreInterval = setInterval(this.loadMore, 10000);
+    this.loadMoreInterval = setInterval(function () {
+      var prevQueueLength = _this2.queue.length;
+      _this2.loadMore(function () {
+        if (prevQueueLength === 0 && _this2.queue.length > 0) {
+          _this2.immediatelyShowQueue();
+        }
+      });
+    }, 4500);
     this.updateQueueInterval = setInterval(this.updateQueueIndex, 10000);
   },
   getInitialState: function getInitialState() {
     this.time = null;
     this.count = 0;
-    this.queue = ['snow globe'];
+    this.queue = [];
     this.mostRecent = [];
     this.mostRecentMax = 10;
-
-    var inputValue;
-    if (this.queue.length > 0) {
-      inputValue = this.queue.shift();
-    } else {
-      inputValue = '';
-    }
-    return {
-      inputValue: inputValue
-    };
+    this.idleQueue = [];
+    this.popularIndex = 0;
+    this.popularQueue = ['birthday'];
+    return this.getQueueIndexState();
   },
   resetQueue: function resetQueue() {
     this.queue = [];
@@ -42114,23 +42315,38 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
     this.count = 0;
     this.initIntervals();
   },
+  immediatelyShowQueue: function immediatelyShowQueue() {
+    this.updateQueueIndex();
+    this.initIntervals();
+  },
   initQueueState: function initQueueState(callback) {
-    var _this2 = this;
+    var _this3 = this;
 
     // get initial clock
-    if (this.time === null) {
-      var initUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=status';
-      _jquery2.default.getJSON(initUrl).then(function (data) {
-        _this2.time = data.time;
-        _this2.count = data.count;
-        callback(true);
-      }, function () {
-        callback(false);
+    var initUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=status';
+    _jquery2.default.getJSON(initUrl).then(function (data) {
+      _this3.time = data.time;
+      _this3.count = data.count;
+      callback(true);
+    }, function () {
+      callback(false);
+    });
+    // Fetch popular queries
+    var popularUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=popular&num=100';
+    _jquery2.default.getJSON(popularUrl).then(function (data) {
+      data.forEach(function (row, idx) {
+        if (_this3.popularQueue.indexOf(row[0] === -1)) {
+          _this3.popularQueue.push(row[0]);
+        }
       });
-    }
+    });
   },
+
+  /**
+   * Load more from the API
+   */
   loadMore: function loadMore(callback) {
-    var _this3 = this;
+    var _this4 = this;
 
     if (!callback) {
       callback = function callback() {};
@@ -42140,25 +42356,25 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
     if (this.time === null) {
       this.initQueueState(function (result) {
         if (result === true) {
-          _this3.loadMore(callback);
+          _this4.loadMore(callback);
         } else {
           alert('There was an error accessing the API');
         }
       });
     } else {
-      // live
+      // download latest live results
       var moreUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=list&start=' + this.time;
       _jquery2.default.getJSON(moreUrl).then(function (data) {
         if (data.length > 0) {
-          _this3.time = data[data.length - 1].split('|')[0];
-          _this3.time = Number(_this3.time) + 1; // Note we add 1 to get results "after"
+          _this4.time = data[data.length - 1].split('|')[0];
+          _this4.time = Number(_this4.time) + 1; // Note we add 1 to get results "after"
           data.forEach(function (row, index) {
             var val = row.split('|')[1];
-            if (_this3.mostRecent.indexOf(val) === -1) {
-              _this3.queue.push(val);
-              _this3.mostRecent.push(val);
-              if (_this3.mostRecent.length > _this3.mostRecentMax) {
-                _this3.mostRecent.shift();
+            if (_this4.mostRecent.indexOf(val) === -1) {
+              _this4.queue.push(val);
+              _this4.mostRecent.push(val);
+              if (_this4.mostRecent.length > _this4.mostRecentMax) {
+                _this4.mostRecent.shift();
               }
             }
           });
@@ -42167,19 +42383,26 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
       });
     }
   },
-  updateQueueIndex: function updateQueueIndex() {
+  getQueueIndexState: function getQueueIndexState() {
+    var inputValue,
+        isUsingPopluar = false;
     if (this.queue.length > 0) {
-      var inputValue = this.queue.shift();
-      this.setState({ inputValue: inputValue });
+      inputValue = this.queue.shift();
+    } else if (this.idleQueue > 0) {
+      inputValue = this.idleQueue.shift();
+    } else {
+      this.popularIndex = (this.popularIndex + 1) % this.popularQueue.length;
+      inputValue = this.popularQueue[this.popularIndex];
+      isUsingPopluar = true;
     }
+    return {
+      inputValue: inputValue,
+      isUsingPopluar: isUsingPopluar
+    };
   },
-
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.query !== nextProps.query) {
-  //     this.setState({inputValue: nextProps.query});
-  //   }
-  // },
+  updateQueueIndex: function updateQueueIndex() {
+    this.setState(this.getQueueIndexState());
+  },
   componentWillUnmount: function componentWillUnmount() {},
   render: function render() {
     return _react2.default.createElement(
@@ -42187,10 +42410,26 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
       { className: 'live-results' },
       _react2.default.createElement(
         'h1',
-        null,
-        'Live: "',
-        this.state.inputValue,
-        '"'
+        { className: 'live-h1' },
+        _react2.default.createElement('img', {
+          src: 'assets/discolp.gif',
+          alt: 'popular',
+          style: {
+            display: this.state.isUsingPopluar ? 'inline-block' : 'none'
+          }
+        }),
+        _react2.default.createElement('img', {
+          src: 'assets/pgonair.gif',
+          alt: 'on air',
+          style: {
+            display: this.state.isUsingPopluar ? 'none' : 'inline-block'
+          }
+        }),
+        _react2.default.createElement(
+          'span',
+          { className: 'title-text-wrapper' },
+          _react2.default.createElement(_titleText2.default, { value: this.state.inputValue })
+        )
       ),
       _react2.default.createElement(_searchResults2.default, {
         query: this.state.inputValue,
@@ -42200,7 +42439,7 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
   }
 }));
 
-},{"./loader.jsx":263,"./results-infinite.jsx":264,"./results-masonry.jsx":265,"./results-packery.jsx":266,"./results.jsx":267,"./search-results.jsx":270,"history":54,"jquery":62,"react":256,"react-router":110}],263:[function(require,module,exports){
+},{"./loader.jsx":265,"./results-infinite.jsx":266,"./results-masonry.jsx":267,"./results-packery.jsx":268,"./results.jsx":269,"./search-results.jsx":272,"./title-text.jsx":273,"history":54,"jquery":62,"react":256,"react-router":110}],265:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42226,7 +42465,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256}],264:[function(require,module,exports){
+},{"react":256}],266:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42330,7 +42569,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"./loader.jsx":263,"react":256,"react-infinite-scroller":79,"react-router":110}],265:[function(require,module,exports){
+},{"./loader.jsx":265,"react":256,"react-infinite-scroller":79,"react-router":110}],267:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42399,7 +42638,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256,"react-masonry-component":80,"react-router":110}],266:[function(require,module,exports){
+},{"react":256,"react-masonry-component":80,"react-router":110}],268:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42519,7 +42758,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"./custom-packery.jsx":260,"./loader.jsx":263,"react":256,"react-router":110,"react-visibility-sensor":118}],267:[function(require,module,exports){
+},{"./custom-packery.jsx":261,"./loader.jsx":265,"react":256,"react-router":110,"react-visibility-sensor":118}],269:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42576,7 +42815,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256,"react-router":110}],268:[function(require,module,exports){
+},{"react":256,"react-router":110}],270:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42589,6 +42828,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _header = require('./header.jsx');
+
+var _header2 = _interopRequireDefault(_header);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _react2.default.createClass({
@@ -42598,6 +42841,7 @@ exports.default = _react2.default.createClass({
     return _react2.default.createElement(
       'div',
       null,
+      _react2.default.createElement(_header2.default, null),
       _react2.default.createElement(
         'div',
         { className: 'content' },
@@ -42607,7 +42851,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256,"react-router":110}],269:[function(require,module,exports){
+},{"./header.jsx":262,"react":256,"react-router":110}],271:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42636,6 +42880,10 @@ var _liveResults = require('./live-results.jsx');
 
 var _liveResults2 = _interopRequireDefault(_liveResults);
 
+var _about = require('./about.jsx');
+
+var _about2 = _interopRequireDefault(_about);
+
 var _history = require('history');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42654,6 +42902,7 @@ exports.default = _react2.default.createElement(
     _reactRouter.Route,
     { path: '/', component: _root2.default },
     _react2.default.createElement(_reactRouter.Route, { path: '/live', component: _liveResults2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: '/about-gifcities', component: _about2.default }),
     _react2.default.createElement(
       _reactRouter.Route,
       { path: '/', component: _home2.default },
@@ -42663,7 +42912,7 @@ exports.default = _react2.default.createElement(
   )
 );
 
-},{"./home.jsx":261,"./live-results.jsx":262,"./root.jsx":268,"./search-results.jsx":270,"history":54,"react":256,"react-router":110}],270:[function(require,module,exports){
+},{"./about.jsx":260,"./home.jsx":263,"./live-results.jsx":264,"./root.jsx":270,"./search-results.jsx":272,"history":54,"react":256,"react-router":110}],272:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42771,4 +43020,110 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
   }
 }));
 
-},{"./loader.jsx":263,"./results-infinite.jsx":264,"./results-masonry.jsx":265,"./results-packery.jsx":266,"./results.jsx":267,"jquery":62,"react":256,"react-router":110}]},{},[259]);
+},{"./loader.jsx":265,"./results-infinite.jsx":266,"./results-masonry.jsx":267,"./results-packery.jsx":268,"./results.jsx":269,"jquery":62,"react":256,"react-router":110}],273:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _react2.default.createClass({
+  displayName: "title-text",
+  componentDidMount: function componentDidMount() {
+    this.setupText();
+  },
+  componentDidUpdate: function componentDidUpdate() {
+    var to;
+    while (to = this.timeouts.pop()) {
+      clearTimeout(to);
+    }
+    this.setupText();
+  },
+  setupText: function setupText() {
+    //Flying Letters script- by Matthias (info@freejavascripts.f2s.com)
+    // Modified by Twey for efficiency and compatibility
+    //For this script and more, visit Dynamic Drive: http://www.dynamicdrive.com
+
+    //Configure message to display. Use "$" for linebreak
+    //By default, set to just grab the text from element with ID="fly"
+    var el = this.refs.fly;
+    var message = this.props.value; // $ = taking a new line
+    var distance = 50; // pixel(s)
+    var speed = 200; // milliseconds
+
+    var txt = "",
+        num = 0,
+        num4 = 0,
+        flyofle = "",
+        flyofwi = "",
+        flyofto = "",
+        fly = el;
+
+    this.timeouts = [];
+    var self = this;
+
+    var stfly = function stfly() {
+      for (var i = 0; i != message.length; i++) {
+        if (message.charAt(i) != "$") txt += "<span style='position:relative;visibility:hidden;' id='n" + i + "'>" + message.charAt(i) + "<\/span>";else txt += "<br>";
+      }
+      fly.innerHTML = txt;
+      txt = "";
+      flyofle = fly.offsetLeft;
+      flyofwi = fly.offsetWidth;
+      flyofto = fly.offsetTop;
+      fly2b();
+    };
+
+    var fly2b = function fly2b() {
+      if (num4 != message.length) {
+        if (message.charAt(num4) != "$") {
+          var then = document.getElementById("n" + num4);
+          then.style.left = flyofle - then.offsetLeft + flyofwi / 2 + 'px';
+          then.style.top = flyofto - then.offsetTop + distance + 'px';
+          fly3(then.id, parseInt(then.style.left), parseInt(then.style.left) / 5, parseInt(then.style.top), parseInt(then.style.top) / 5);
+        }
+        num4++;
+        var to = setTimeout(function () {
+          fly2b();
+        }, speed);
+        self.timeouts.push(to);
+      }
+    };
+
+    var fly3 = function fly3(target, lef2, num2, top2, num3) {
+      if (Math.floor(top2) != 0 && Math.floor(top2) != -1 || Math.floor(lef2) != 0 && Math.floor(lef2) != -1) {
+        if (lef2 >= 0) lef2 -= num2;else lef2 += num2 * -1;
+        if (Math.floor(lef2) != -1) {
+          document.getElementById(target).style.visibility = "visible";
+          document.getElementById(target).style.left = Math.floor(lef2) + 'px';
+        } else {
+          document.getElementById(target).style.visibility = "visible";
+          document.getElementById(target).style.left = Math.floor(lef2 + 1) + 'px';
+        }
+        if (lef2 >= 0) top2 -= num3;else top2 += num3 * -1;
+        if (Math.floor(top2) != -1) document.getElementById(target).style.top = Math.floor(top2) + 'px';else document.getElementById(target).style.top = Math.floor(top2 + 1) + 'px';
+        var to = setTimeout(function () {
+          fly3(target, lef2, num2, top2, num3);
+        }, 50);
+        self.timeouts.push(to);
+      }
+    };
+
+    stfly();
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      "span",
+      { ref: "fly" },
+      this.props.value
+    );
+  }
+});
+
+},{"react":256}]},{},[259]);

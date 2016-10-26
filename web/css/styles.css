@@ -30,8 +30,7 @@ h1 { font-weight: lighter; }
 .search-box-wrapper {
   border: 3px solid #4a90e2;
   border: 2px solid black;
-  width: 420px;
-  /*height: 50px;*/
+  max-width: 420px;
   margin: 0 auto 32px auto;
   display: -webkit-box;
   display: -moz-box;
@@ -39,55 +38,46 @@ h1 { font-weight: lighter; }
   display: -webkit-flex;
   display: flex;
   align-items: center; /* TODO prefix */
+  flex-direction: row;
 
   position: fixed;
+  top: 40px;
   z-index: 1000;
   background-color: white;
   box-shadow: 10px 5px 5px #ccc;
   padding-right:8px;
 
 }
-.search-icon {
-  padding: 10px;
+.search-icon { padding: 10px; }
+.search-input-wrapper {
+  flex: 1;
 }
 .search-input {
   width: 100%;
-  /*height: 48px;*/
   border: none;
   font-size: 28px;
   outline: none;
   text-align: center;
   font-weight: lighter;
   padding: 4px;
+  box-sizing: border-box;
   /*margin-bottom: 16px;*/
+}
+.search-image-wrapper {
+
 }
 .search-box-wrapper img {
   cursor: pointer;
+  width: 100px;
+  height: 22px;
 }
-.search-button {
-  /*margin-top: 15px;*/
-  /*margin-bottom: 15px;*/
-  /*margin-right: 30px;*/
-  font-family: sans-serif;
-  font-size: 16px;
-  letter-spacing: 1px;
-  font-weight: 100;
-  text-align: center;
-  color: #ffffff;
-  width: 134px;
-  border: 0;
-  outline: none;
-  /*background-color: #4a90e2;*/
-  background-color: black;
-}
+
 /** stamp sits below search to not put gifs under search */
 .stamp {
   width: 460px;
   height: 50px;
   /*background-color: red;*/
 }
-/*.search-button:hover { background-color: #4998f5; }*/
-/*.search-button:active { background-color: #2f74c4; }*/
 
 .loader {
   text-align:center;
@@ -95,12 +85,94 @@ h1 { font-weight: lighter; }
 }
 .results-wrapper .loader {
   margin: 32px;
-  /*position: fixed;*/
-  /*top: 10px;*/
-  /*left: 10px;*/
 }
 
 .VisibilitySensor {
-  /*background-color: red;*/
   height: 100px;
+}
+
+.title-text-wrapper {
+  position:relative;
+  top: -5px;
+  left: 20px;
+  font-family: "Comic Sans MS", cursive, serif;
+  font-weight: bold;
+  font-size: 1.45em;
+}
+
+.floating-link {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  font-size:30px;
+  font-weight: bold;
+  color: black;
+  letter-spacing: 2px;
+  font-style: italic;
+  z-index: 99999;
+  cursor:pointer;
+}
+.live-h1 {
+  margin-top: 0;
+}
+.ia-logo {
+  width: 50px;
+  height: 50px;
+  background-image: url(../assets/ia-logo.png);
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  display: none;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  padding: 0 0 10px 0;
+  z-index: 9999;
+}
+.header .links {
+  display: inline-block;
+  padding: 10px;
+
+  background-color: white;
+}
+.header .links a {
+  margin-right: 10px;
+  letter-spacing: 1px;
+}
+.header .links a:hover {
+  font-style: italic;
+}
+.about {
+  max-width: 600px;
+  padding: 20px 30px 40px 30px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 22px;
+  background-color: white;
+}
+
+@media (max-width: 800px) {
+  body {
+    padding: 10px;
+  }
+  .search-box-wrapper {
+    max-width: initial;
+    width: 90%;
+    box-sizing: border-box;
+  }
+  .content {
+    overflow: hidden;
+  }
+  .floating-link {
+    display: none;
+  }
+  .about { margin-top: 40px; }
+  .results-wrapper .loader {
+    top: 100px;
+    position: relative;
+  }
 }
