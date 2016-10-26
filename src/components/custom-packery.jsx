@@ -46,7 +46,7 @@ function throttle(fn, threshhold, scope) {
 
 export default class extends React.Component {
 
-  propTypes = {
+  static propTypes = {
     disableImagesLoaded: React.PropTypes.bool,
     options: React.PropTypes.object
   }

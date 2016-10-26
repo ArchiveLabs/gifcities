@@ -7,7 +7,7 @@ import HomeComponent from './home.jsx';
 import SearchResultsComponent from './search-results.jsx';
 import LiveResultsComponent from './live-results.jsx';
 import AboutComponent from './about.jsx';
-
+import TwentyComponent from './twenty.jsx';
 
 
 import { createHashHistory } from 'history';
@@ -20,6 +20,7 @@ const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 export default (
   <Router history={appHistory} onUpdate={() => window.scrollTo(0, 0)}>
     <Route path="/" component={RootComponent}>
+      <Route path="/20" component={TwentyComponent}></Route>
       <Route path="/live" component={LiveResultsComponent}></Route>
       <Route path="/about-gifcities" component={AboutComponent}></Route>
       <Route path="/" component={HomeComponent}>

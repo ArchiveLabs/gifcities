@@ -41674,11 +41674,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _react2.default.createClass({
   displayName: 'about',
 
+  componentWillMount: function componentWillMount() {
+    document.body.style.background = 'white';
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    document.body.style.background = null;
+  },
   render: function render() {
     return _react2.default.createElement(
       'div',
       { className: 'about' },
-      'Gifcities: The Geocities Animated Gif Search Engine was a special project of the Internet Archive done as part of our 20th Anniversary to highlight and celebrate fun aspects of the amazing history of the web as represented in the web archive and the Wayback Machine.',
+      'GifCities: The Geocities Animated Gif Search Engine was a special project of the Internet Archive done as part of our 20th Anniversary to highlight and celebrate fun aspects of the amazing history of the web as represented in the web archive and the Wayback Machine.',
       _react2.default.createElement('br', null),
       _react2.default.createElement('br', null),
       'Geocities was an early web hosting service, started in 1994 and acquired by Yahoo in 1999, with which users could create their own custom websites. The platform hosted over 38 million user-built pages and was at one time the third most visited site on the web. In 2009, Yahoo announced it was closing down the service, at which point the Internet Archive attempted to archive as much of the content as possible. More information on Geocities can be found on the related Wikipedia page: ',
@@ -41717,7 +41723,7 @@ exports.default = _react2.default.createClass({
         { href: 'https://archive.org/details/HallofGifs' },
         'https://archive.org/details/HallofGifs'
       ),
-      '), and researchers such as Ian Milligan had been data mining the full Geocities web archive to explore community formation(',
+      '), and researchers such as Ian Milligan had been data mining the full Geocities web archive to explore community formation (',
       _react2.default.createElement(
         'a',
         { href: 'https://ianmilligan.ca/2015/03/25/herrenhausen-big-data-lightning-talk-finding-community-in-the-ruins-of-geocities' },
@@ -41747,7 +41753,16 @@ exports.default = _react2.default.createClass({
       ' to the project. Thanks go as well to the efforts of the tireless Internet Archive staff that work to archive and make accessible our ongoing work to preserve the web for both today’s users and for posterity.',
       _react2.default.createElement('br', null),
       _react2.default.createElement('br', null),
-      'The Internet Archive Gifcities project team was: Vinay Goel (Senior Data Engineer,) Jefferson Bailey (Director, Web Archiving), and Richard Caceres (Software Engineer).',
+      'The Internet Archive GifCities project team was: Vinay Goel (Senior Data Engineer,) Jefferson Bailey (Director, Web Archiving), and Richard Caceres (Software Engineer).',
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('br', null),
+      'GifCities is an ',
+      _react2.default.createElement(
+        'a',
+        { href: 'http://www.archiveexperiments.org', target: '_blank' },
+        'Archive Experiment'
+      ),
+      '.',
       _react2.default.createElement('br', null),
       _react2.default.createElement('br', null),
       'Now go look at some awesome early web GIFs!'
@@ -41838,10 +41853,6 @@ var _class = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this, props));
 
-    _this.propTypes = {
-      disableImagesLoaded: _react2.default.PropTypes.bool,
-      options: _react2.default.PropTypes.object
-    };
     _this.defaultProps = {
       disableImagesLoaded: false,
       options: {},
@@ -42003,6 +42014,10 @@ var _class = function (_React$Component) {
   return _class;
 }(_react2.default.Component);
 
+_class.propTypes = {
+  disableImagesLoaded: _react2.default.PropTypes.bool,
+  options: _react2.default.PropTypes.object
+};
 exports.default = _class;
 
 },{"imagesloaded":60,"packery":70,"react":256,"react-dom":78}],262:[function(require,module,exports){
@@ -42033,7 +42048,11 @@ exports.default = _react2.default.createClass({
         _react2.default.createElement(
           _reactRouter.Link,
           { to: '/' },
-          'GifCities.org'
+          _react2.default.createElement(
+            'span',
+            { className: 'logo' },
+            'GifCities'
+          )
         ),
         _react2.default.createElement(
           _reactRouter.Link,
@@ -42042,8 +42061,8 @@ exports.default = _react2.default.createClass({
         ),
         _react2.default.createElement(
           'a',
-          { target: '_blank', href: 'https://archive.org/donate/' },
-          'Donate'
+          { className: 'donate', target: '_blank', href: 'https://archive.org/donate/', title: 'Donate to Internet Archive' },
+          '$$'
         )
       ),
       _react2.default.createElement('div', { className: 'ia-logo' }),
@@ -42113,15 +42132,22 @@ var appHistory = (0, _reactRouter.useRouterHistory)(_history.createHashHistory)(
 // history stuff
 exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
   getInitialState: function getInitialState() {
+    // Look at cookies...
+    var notrack;
+    if (document.cookie.indexOf('happybirthday') >= 0) {
+      notrack = 0;
+    } else {
+      notrack = 1;
+    }
     return {
-      inputValue: this.props.params.query || ''
+      inputValue: this.props.params.query || '',
+      notrack: notrack
     };
   },
   handleChange: function handleChange(event) {
     this.setState({ inputValue: event.target.value });
   },
   handleSubmit: function handleSubmit(e) {
-    console.log('handle submit');
     if (e !== undefined) {
       e.preventDefault();
     }
@@ -42135,30 +42161,69 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
   renderHomeText: function renderHomeText() {
     return _react2.default.createElement(
       'div',
-      null,
+      { className: 'home-text' },
       _react2.default.createElement(
         'h1',
         null,
-        'GifCities',
-        _react2.default.createElement('br', null),
+        'GifCities'
+      ),
+      _react2.default.createElement(
+        'h2',
+        null,
         'The Geocities Animated GIF Search Engine'
       ),
       _react2.default.createElement('br', null),
-      'A Project of',
+      _react2.default.createElement(
+        'span',
+        { className: 'a-project-of' },
+        'A Project of'
+      ),
       _react2.default.createElement('br', null),
-      _react2.default.createElement('img', { src: 'https://web.archive.org/web/20090829162203/http://geocities.com/Athens/Forum/7243/Internet.gif' }),
-      _react2.default.createElement('img', { src: 'https://web.archive.org/web/20090831021236/http://www.geocities.com/diabloiixpacfaq/archive.gif' }),
+      _react2.default.createElement('img', { className: 'ia-img', width: '50', height: '50', src: 'assets/internetarchive.svg' }),
+      _react2.default.createElement('img', { width: '430', height: '77', src: 'assets/Internet.gif' }),
+      _react2.default.createElement('img', { width: '193', height: '74', src: 'assets/archive.gif' }),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('br', null),
       _react2.default.createElement(
         'p',
         null,
-        'GifCities is a special project of the Internet Archive to celebrate 20 years of preserving the web. Internet Archive is a non-profit digital library of millions of free books, movies, software, music, websites, and more. Please donate to help us in our efforts to provide “Universal Access to All Knowledge.”'
-      )
+        'GifCities is a special project of the ',
+        _react2.default.createElement(
+          'a',
+          { href: 'https://archive.org', target: '_blank' },
+          'Internet Archive'
+        ),
+        ' to celebrate 20 years of preserving the web. Internet Archive is a non-profit digital library of millions of free books, movies, software, music, websites, and more. Please ',
+        _react2.default.createElement(
+          'a',
+          { href: 'https://archive.org/donate', target: '_blank' },
+          'donate'
+        ),
+        ' to help us in our efforts to provide “Universal Access to All Knowledge.”'
+      ),
+      _react2.default.createElement('br', null),
+      _react2.default.createElement('img', { width: '140', height: '104', src: 'assets/tomjerry.gif' })
     );
   },
   render: function render() {
+    var _this = this;
+
     var homeText;
-    if (this.state.inputValue === '') {
+    if (!this.props.params.query) {
       homeText = this.renderHomeText();
+    }
+    var extraGif;
+    if (this.state.notrack === 0) {
+      extraGif = _react2.default.createElement('img', {
+        src: 'assets/YELLOW_BLINK_0.GIF',
+        width: '28',
+        height: '28',
+        title: 'Your queries will be fed into the projection',
+        onClick: function onClick() {
+          document.cookie = "happybirthday=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+          _this.setState({ notrack: 1 });
+        }
+      });
     }
     return _react2.default.createElement(
       'div',
@@ -42169,6 +42234,7 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
         _react2.default.createElement(
           'div',
           { className: 'search-box-wrapper' },
+          extraGif,
           _react2.default.createElement(
             'div',
             { className: 'search-input-wrapper' },
@@ -42187,7 +42253,9 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
         )
       ),
       homeText,
-      this.props.children
+      this.props.children && _react2.default.cloneElement(this.props.children, {
+        notrack: this.state.notrack
+      })
     );
   }
 }));
@@ -42198,6 +42266,8 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _React$createClass;
 
 var _react = require('react');
 
@@ -42241,13 +42311,15 @@ var _history = require('history');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// history stuff
+
+
 var appHistory = (0, _reactRouter.useRouterHistory)(_history.createHashHistory)({ queryKey: false });
 
 // Note relies on this.props.params.id (set via react-router)
-
-
-// history stuff
-exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
+exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass((_React$createClass = {
   componentWillMount: function componentWillMount() {
     var _this = this;
 
@@ -42277,6 +42349,14 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
           break;
       }
     });
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    if (this.loadMoreInterval) {
+      clearInterval(this.loadMoreInterval);
+    }
+    if (this.updateQueueInterval) {
+      clearInterval(this.updateQueueInterval);
+    }
   },
   initIntervals: function initIntervals() {
     var _this2 = this;
@@ -42323,7 +42403,7 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
     var _this3 = this;
 
     // get initial clock
-    var initUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=status';
+    var initUrl = 'https://wbgrp-svc060.us.archive.org/api/v1/manager?op=status';
     _jquery2.default.getJSON(initUrl).then(function (data) {
       _this3.time = data.time;
       _this3.count = data.count;
@@ -42332,7 +42412,7 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
       callback(false);
     });
     // Fetch popular queries
-    var popularUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=popular&num=100';
+    var popularUrl = 'https://wbgrp-svc060.us.archive.org/api/v1/manager?op=popular&num=100';
     _jquery2.default.getJSON(popularUrl).then(function (data) {
       data.forEach(function (row, idx) {
         if (_this3.popularQueue.indexOf(row[0] === -1)) {
@@ -42358,12 +42438,12 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
         if (result === true) {
           _this4.loadMore(callback);
         } else {
-          alert('There was an error accessing the API');
+          console.log('There was an error accessing the API');
         }
       });
     } else {
       // download latest live results
-      var moreUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=list&start=' + this.time;
+      var moreUrl = 'http:https://wbgrp-svc060.us.archive.org:8091/api/v1/manager?op=list&start=' + this.time;
       _jquery2.default.getJSON(moreUrl).then(function (data) {
         if (data.length > 0) {
           _this4.time = data[data.length - 1].split('|')[0];
@@ -42402,42 +42482,40 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
   },
   updateQueueIndex: function updateQueueIndex() {
     this.setState(this.getQueueIndexState());
-  },
-  componentWillUnmount: function componentWillUnmount() {},
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      { className: 'live-results' },
-      _react2.default.createElement(
-        'h1',
-        { className: 'live-h1' },
-        _react2.default.createElement('img', {
-          src: 'assets/discolp.gif',
-          alt: 'popular',
-          style: {
-            display: this.state.isUsingPopluar ? 'inline-block' : 'none'
-          }
-        }),
-        _react2.default.createElement('img', {
-          src: 'assets/pgonair.gif',
-          alt: 'on air',
-          style: {
-            display: this.state.isUsingPopluar ? 'none' : 'inline-block'
-          }
-        }),
-        _react2.default.createElement(
-          'span',
-          { className: 'title-text-wrapper' },
-          _react2.default.createElement(_titleText2.default, { value: this.state.inputValue })
-        )
-      ),
-      _react2.default.createElement(_searchResults2.default, {
-        query: this.state.inputValue,
-        notrack: true,
-        randomize: true })
-    );
   }
-}));
+}, _defineProperty(_React$createClass, 'componentWillUnmount', function componentWillUnmount() {}), _defineProperty(_React$createClass, 'render', function render() {
+  return _react2.default.createElement(
+    'div',
+    { className: 'live-results' },
+    _react2.default.createElement(
+      'h1',
+      { className: 'live-h1' },
+      _react2.default.createElement('img', {
+        src: 'assets/discolp.gif',
+        alt: 'popular',
+        style: {
+          display: this.state.isUsingPopluar ? 'inline-block' : 'none'
+        }
+      }),
+      _react2.default.createElement('img', {
+        src: 'assets/pgonair.gif',
+        alt: 'on air',
+        style: {
+          display: this.state.isUsingPopluar ? 'none' : 'inline-block'
+        }
+      }),
+      _react2.default.createElement(
+        'span',
+        { className: 'title-text-wrapper' },
+        _react2.default.createElement(_titleText2.default, { value: this.state.inputValue })
+      )
+    ),
+    _react2.default.createElement(_searchResults2.default, {
+      query: this.state.inputValue,
+      notrack: true,
+      randomize: true })
+  );
+}), _React$createClass)));
 
 },{"./loader.jsx":265,"./results-infinite.jsx":266,"./results-masonry.jsx":267,"./results-packery.jsx":268,"./results.jsx":269,"./search-results.jsx":272,"./title-text.jsx":273,"history":54,"jquery":62,"react":256,"react-router":110}],265:[function(require,module,exports){
 "use strict";
@@ -42674,33 +42752,35 @@ var options = {
   stamp: '.stamp'
 };
 
+var pageSize = 20;
+
 exports.default = _react2.default.createClass({
   displayName: 'results-packery',
 
-  propTypes: {
-    /**
-       [{
-         "weight": 347,
-         "gif": "20091019045002/http://www.geocities.com/jiffyjamz/StArTrEk/NeWtReKsPiNnA.gif",
-         "checksum": "HUIJLTACP3HITNMU6GTNQVHE2WJLDAJ4",
-         "page": "https://web.archive.org/web/20091022020929/http://geocities.com/mrjiffyjamz/BOSTON/NEPATRiOTS/FAMERPATZ.html",
-         "url_text": "jiffy jamz star trek new trek spinna",
-         "width: "..."
-         height: "..."
-       },]
-     */
-    results: _react2.default.PropTypes.array
-  },
+  /**
+     results: [{
+       "weight": 347,
+       "gif": "20091019045002/http://www.geocities.com/jiffyjamz/StArTrEk/NeWtReKsPiNnA.gif",
+       "checksum": "HUIJLTACP3HITNMU6GTNQVHE2WJLDAJ4",
+       "page": "https://web.archive.org/web/20091022020929/http://geocities.com/mrjiffyjamz/BOSTON/NEPATRiOTS/FAMERPATZ.html",
+       "url_text": "jiffy jamz star trek new trek spinna",
+       "width: "..."
+       height: "..."
+     },]
+   */
+  // propTypes: {
+  //   results: React.PropTypes.array,
+  // },
   getInitialState: function getInitialState() {
     return {
-      offset: 40
+      offset: pageSize
     };
   },
   onVisibillityChange: function onVisibillityChange(isVisible) {
-    console.log('onVisibillityChange', isVisible);
+    // console.log('onVisibillityChange', isVisible);
     if (isVisible === true && this.state.offset < this.props.results.length) {
-      this.setState({ offset: this.state.offset + 40 });
-      console.log(this.state.offset);
+      this.setState({ offset: this.state.offset + pageSize });
+      // console.log(this.state.offset);
     }
   },
   render: function render() {
@@ -42710,17 +42790,17 @@ exports.default = _react2.default.createClass({
       if (row.page !== 'https://web.archive.org/') {
         return _react2.default.createElement(
           'div',
-          null,
+          { key: idx },
           _react2.default.createElement(
             'a',
-            { key: idx, href: row.page },
+            { href: row.page, target: '_blank' },
             img
           )
         );
       } else {
         return _react2.default.createElement(
           'div',
-          null,
+          { key: idx },
           img
         );
       }
@@ -42884,6 +42964,10 @@ var _about = require('./about.jsx');
 
 var _about2 = _interopRequireDefault(_about);
 
+var _twenty = require('./twenty.jsx');
+
+var _twenty2 = _interopRequireDefault(_twenty);
+
 var _history = require('history');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42901,6 +42985,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(
     _reactRouter.Route,
     { path: '/', component: _root2.default },
+    _react2.default.createElement(_reactRouter.Route, { path: '/20', component: _twenty2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '/live', component: _liveResults2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '/about-gifcities', component: _about2.default }),
     _react2.default.createElement(
@@ -42912,7 +42997,7 @@ exports.default = _react2.default.createElement(
   )
 );
 
-},{"./about.jsx":260,"./home.jsx":263,"./live-results.jsx":264,"./root.jsx":270,"./search-results.jsx":272,"history":54,"react":256,"react-router":110}],272:[function(require,module,exports){
+},{"./about.jsx":260,"./home.jsx":263,"./live-results.jsx":264,"./root.jsx":270,"./search-results.jsx":272,"./twenty.jsx":274,"history":54,"react":256,"react-router":110}],272:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42956,20 +43041,21 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
   getInitialState: function getInitialState() {
     return {
       results: [],
-      isLoading: false
+      isLoading: false,
+      isError: false
     };
   },
   loadResults: function loadResults(query) {
     var _this = this;
 
-    this.setState({ isLoading: true, results: [] });
+    this.setState({ isLoading: true, results: [], isError: false });
 
-    // live
-    var url = '//vinay-dev.us.archive.org:8091/api/v1/gifsearch?q=';
+    var url = 'https://wbgrp-svc060.us.archive.org/api/v1/gifsearch?q=';
     url = url + encodeURIComponent(query);
 
-    if (this.props.notrack === true) {
-      url = url + '&notrack=1';
+    // pardon my verbose logic... it's late
+    if (this.props.notrack !== undefined) {
+      url = url + '&notrack=' + Number(this.props.notrack);
     }
 
     _jquery2.default.ajax({
@@ -42986,7 +43072,7 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
     }, function () {
       // TODO display error to user
       console.log('error fetching data');
-      _this.setState({ isLoading: false });
+      _this.setState({ isLoading: false, isError: true });
     });
   },
   componentDidMount: function componentDidMount() {
@@ -43010,6 +43096,14 @@ exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
     var loaderEl;
     if (this.state.isLoading) {
       loaderEl = _react2.default.createElement(_loader2.default, null);
+    }
+    var errorEl;
+    if (this.state.isError) {
+      errorEl = _react2.default.createElement(
+        'div',
+        null,
+        'There was a server error :('
+      );
     }
     return _react2.default.createElement(
       'div',
@@ -43126,4 +43220,40 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"react":256}]},{},[259]);
+},{"react":256}],274:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _history = require('history');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var appHistory = (0, _reactRouter.useRouterHistory)(_history.createHashHistory)({ queryKey: false });
+
+// history stuff
+
+
+exports.default = (0, _reactRouter.withRouter)(_react2.default.createClass({
+  componentWillMount: function componentWillMount() {
+    document.cookie = "happybirthday=1; path=/";
+    appHistory.push('/');
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      null,
+      '20'
+    );
+  }
+}));
+
+},{"history":54,"react":256,"react-router":110}]},{},[259]);

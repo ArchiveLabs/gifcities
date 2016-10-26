@@ -47,6 +47,14 @@ export default withRouter(
         }
       });
     },
+    componentWillUnmount() {
+      if (this.loadMoreInterval) {
+        clearInterval(this.loadMoreInterval);
+      }
+      if (this.updateQueueInterval) {
+        clearInterval(this.updateQueueInterval);
+      }
+    },
     initIntervals() {
       if (this.loadMoreInterval) {
         clearInterval(this.loadMoreInterval);
@@ -89,7 +97,7 @@ export default withRouter(
 
     initQueueState(callback) {
       // get initial clock
-      var initUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=status';
+      var initUrl = 'https://wbgrp-svc060.us.archive.org/api/v1/manager?op=status';
       jQuery.getJSON(initUrl).then((data) => {
         this.time = data.time;
         this.count = data.count;
@@ -98,7 +106,7 @@ export default withRouter(
         callback(false);
       });
       // Fetch popular queries
-      var popularUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=popular&num=100';
+      var popularUrl = 'https://wbgrp-svc060.us.archive.org/api/v1/manager?op=popular&num=100';
       jQuery.getJSON(popularUrl).then((data) => {
         data.forEach((row, idx) => {
           if (this.popularQueue.indexOf(row[0] === -1)) {
@@ -119,12 +127,12 @@ export default withRouter(
           if (result === true) {
             this.loadMore(callback);
           } else {
-            alert('There was an error accessing the API');
+            console.log('There was an error accessing the API');
           }
         })
       } else {
         // download latest live results
-        var moreUrl = 'http://vinay-dev.us.archive.org:8091/api/v1/manager?op=list&start=' + this.time;
+        var moreUrl = 'http:https://wbgrp-svc060.us.archive.org:8091/api/v1/manager?op=list&start=' + this.time;
         jQuery.getJSON(moreUrl).then((data) => {
           if (data.length > 0) {
             this.time = data[data.length - 1].split('|')[0];

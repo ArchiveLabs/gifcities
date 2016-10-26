@@ -12,31 +12,33 @@ var options = {
     stamp: '.stamp',
 };
 
+var pageSize = 20;
+
 export default React.createClass({
-  propTypes: {
-    /**
-       [{
-         "weight": 347,
-         "gif": "20091019045002/http://www.geocities.com/jiffyjamz/StArTrEk/NeWtReKsPiNnA.gif",
-         "checksum": "HUIJLTACP3HITNMU6GTNQVHE2WJLDAJ4",
-         "page": "https://web.archive.org/web/20091022020929/http://geocities.com/mrjiffyjamz/BOSTON/NEPATRiOTS/FAMERPATZ.html",
-         "url_text": "jiffy jamz star trek new trek spinna",
-         "width: "..."
-         height: "..."
-       },]
-     */
-    results: React.PropTypes.array,
-  },
+  /**
+     results: [{
+       "weight": 347,
+       "gif": "20091019045002/http://www.geocities.com/jiffyjamz/StArTrEk/NeWtReKsPiNnA.gif",
+       "checksum": "HUIJLTACP3HITNMU6GTNQVHE2WJLDAJ4",
+       "page": "https://web.archive.org/web/20091022020929/http://geocities.com/mrjiffyjamz/BOSTON/NEPATRiOTS/FAMERPATZ.html",
+       "url_text": "jiffy jamz star trek new trek spinna",
+       "width: "..."
+       height: "..."
+     },]
+   */
+  // propTypes: {
+  //   results: React.PropTypes.array,
+  // },
   getInitialState() {
     return {
-      offset: 40
+      offset: pageSize
     };
   },
   onVisibillityChange(isVisible) {
-    console.log('onVisibillityChange', isVisible);
+    // console.log('onVisibillityChange', isVisible);
     if (isVisible === true && this.state.offset < this.props.results.length) {
-      this.setState({offset: this.state.offset + 40});
-      console.log(this.state.offset);
+      this.setState({offset: this.state.offset + pageSize});
+      // console.log(this.state.offset);
     }
   },
 
@@ -46,14 +48,14 @@ export default React.createClass({
       var img = <img src={url} title={row.url_text} width={row.width} height={row.height} />;
       if (row.page !== 'https://web.archive.org/') {
         return (
-          <div>
-            <a key={idx} href={row.page}>
+          <div key={idx}>
+            <a href={row.page} target="_blank">
               {img}
             </a>
           </div>
         )
       } else {
-        return <div>{img}</div>;
+        return <div key={idx}>{img}</div>;
       }
     });
     var stampEl;

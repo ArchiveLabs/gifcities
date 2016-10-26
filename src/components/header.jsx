@@ -6,10 +6,10 @@ export default React.createClass({
     return (
       <div className="header">
         <div className="links">
-          <Link to={'/'}>GifCities.org</Link>
+          <Link to={'/'}><span className="logo">GifCities</span></Link>
           <Link to={'/about-gifcities'}>About</Link>
 
-          <a target="_blank" href="https://archive.org/donate/">Donate</a>
+          <a className="donate" target="_blank" href="https://archive.org/donate/" title="Donate to Internet Archive">$$</a>
         </div>
         <div className="ia-logo"></div>
         <div className="floating-link">

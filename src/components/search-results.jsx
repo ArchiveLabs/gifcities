@@ -14,17 +14,18 @@ export default withRouter(
       return {
         results: [],
         isLoading: false,
+        isError: false,
       };
     },
     loadResults(query) {
-      this.setState({isLoading: true, results: []});
+      this.setState({isLoading: true, results: [], isError: false});
 
-      // live
-      var url = '//vinay-dev.us.archive.org:8091/api/v1/gifsearch?q=';
+      var url = 'https://wbgrp-svc060.us.archive.org/api/v1/gifsearch?q=';
       url = url + encodeURIComponent(query);
 
-      if (this.props.notrack === true) {
-        url = url + '&notrack=1'
+      // pardon my verbose logic... it's late
+      if (this.props.notrack !== undefined) {
+        url = url + '&notrack=' + Number(this.props.notrack)
       }
 
       jQuery.ajax({
@@ -41,7 +42,7 @@ export default withRouter(
       }, () => {
         // TODO display error to user
         console.log('error fetching data');
-        this.setState({isLoading: false});
+        this.setState({isLoading: false, isError: true});
       });
     },
     componentDidMount() {
@@ -65,6 +66,10 @@ export default withRouter(
       var loaderEl;
       if (this.state.isLoading) {
         loaderEl = (<Loader></Loader>);
+      }
+      var errorEl;
+      if (this.state.isError) {
+        errorEl = (<div>There was a server error :(</div>)
       }
       return (
         <div className="results-wrapper">
