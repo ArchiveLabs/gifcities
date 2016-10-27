@@ -19,7 +19,7 @@ export default withRouter(
       if (document.cookie.indexOf('happybirthday') >= 0) {
         notrack = 0;
       } else {
-        notrack = 1;
+        notrack = 0; // tracking on by default now
       }
       return {
         inputValue: this.props.params.query || '',
@@ -64,7 +64,7 @@ export default withRouter(
         homeText = this.renderHomeText();
       }
       var extraGif;
-      if (this.state.notrack === 0) {
+      if (false && this.state.notrack === 0) {
         extraGif = <img
           src="assets/YELLOW_BLINK_0.GIF"
           width="28"
