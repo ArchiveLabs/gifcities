@@ -1,10 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
 import jQuery from 'jquery';
-import Results from './results.jsx';
-import ResultsMasonry from './results-masonry.jsx';
 import ResultsPackery from './results-packery.jsx';
-import ResultsInfinite from './results-infinite.jsx';
 import Loader from './loader.jsx';
 
 // Note relies on this.props.params.id (set via react-router)
@@ -53,6 +50,9 @@ export default withRouter(
         query = this.props.params.query;
       }
       this.loadResults(query);
+    },
+    componentWillUnmount() {
+
     },
     componentWillReceiveProps(nextProps) {
       if (this.props.query !== nextProps.query) {

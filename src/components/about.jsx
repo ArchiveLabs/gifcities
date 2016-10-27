@@ -23,13 +23,16 @@ export default React.createClass({
         The Geocities web archive has been explored by other projects. The Internet Archive’s own Jason Scott has highlighted “Under Construction” Geocities GIFs (<a href="http://www.textfiles.com/underconstruction/">http://www.textfiles.com/underconstruction/</a>), librarians at North Carolina State University had been interested in Geocities GIFs for use in their data visualization lab (see the demo at <a href="https://archive.org/details/HallofGifs">https://archive.org/details/HallofGifs</a>), and researchers such as Ian Milligan had been data mining the full Geocities web archive to explore community formation (<a href="https://ianmilligan.ca/2015/03/25/herrenhausen-big-data-lightning-talk-finding-community-in-the-ruins-of-geocities">https://ianmilligan.ca/2015/03/25/herrenhausen-big-data-lightning-talk-finding-community-in-the-ruins-of-geocities/</a>).
         <br/>
         <br/>
+        The resulting corpus of Geocities materials have been re-staged and studied by Dragan Espenschied and Olia Lialina of the Geocities Research Institute, describing the important role of Geocities vernacular &ndash; templates, background, MIDIs and of course GIFs &ndash; in the formation of Digital Folklore (<a href="http://blog.geocities.institute/">http://blog.geocities.institute/</a>). Their tumblr blog One Terabyte of Kilobyte Age Photo Op chronologically delivers a new screen shots of  Geocities home pages every 20 minutes, created with historically accurate operating systems and browsers (<a href="http://oneterabyteofkilobyteage.tumblr.com/">http://oneterabyteofkilobyteage.tumblr.com/</a>).
+        <br/>
+        <br/>
         Thanks for the project go first and foremost to the millions of everyday citizens that built such incredible pages and GIFs in Geocities. We also owe special thanks to Yahoo for their guidance and open communication about the GeoCities closure. We also thank the independent volunteer team of archivers at <a href="http://archiveteam.org/">Archive Team</a> for their efforts to <a href="http://archiveteam.org/index.php?title=Geocities">preserve GeoCities</a> and <a href="http://archiveteam.org/index.php?title=Geocities_URL_Lists">contribute URL surveys</a> to the project. Thanks go as well to the efforts of the tireless Internet Archive staff that work to archive and make accessible our ongoing work to preserve the web for both today’s users and for posterity.
         <br/>
         <br/>
-        The Internet Archive GifCities project team was: Vinay Goel (Senior Data Engineer,) Jefferson Bailey (Director, Web Archiving), and Richard Caceres (Software Engineer).
+        The Internet Archive GifCities project team was: Vinay Goel (Senior Data Engineer) Jefferson Bailey (Director, Web Archiving), and Richard Caceres (Software Engineer).
         <br/>
         <br/>
-        GifCities is an <a href="http://www.archiveexperiments.org" target="_blank">Archive Experiment</a>.
+        GifCities is part of <a href="https://archivelab.org" target="_blank">Archive Lab</a>.
         <br/>
         <br/>
         Now go look at some awesome early web GIFs!

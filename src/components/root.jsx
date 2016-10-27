@@ -4,9 +4,13 @@ import Header from './header.jsx';
 
 export default React.createClass({
   render: function() {
+    var hideTopLogo = false;
+    if (this.props.params.query) {
+      hideTopLogo = true;
+    }
     return (
       <div>
-        <Header />
+        <Header hideTopLogo={hideTopLogo} />
         <div className="content">
           {this.props.children}
         </div>

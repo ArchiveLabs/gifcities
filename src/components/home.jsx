@@ -1,10 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
 import jQuery from 'jquery';
-import Results from './results.jsx';
-import ResultsMasonry from './results-masonry.jsx';
-import ResultsPackery from './results-packery.jsx';
-import ResultsInfinite from './results-infinite.jsx';
 import Loader from './loader.jsx';
 
 // history stuff
@@ -31,13 +27,14 @@ export default withRouter(
       };
     },
     handleChange(event) {
-      this.setState({inputValue: event.target.value});
+      this.setState({inputValue: event.target.value || ''});
     },
     handleSubmit(e) {
       if (e !== undefined) {
         e.preventDefault();
       }
-      appHistory.push(this.state.inputValue);
+      var val = this.state.inputValue || '';
+      appHistory.push(val);
     },
     componentWillReceiveProps(nextProps) {
       if (this.props.params.query !== nextProps.params.query) {
@@ -49,16 +46,15 @@ export default withRouter(
         <div className="home-text">
           <h1>GifCities</h1>
           <h2>The Geocities Animated GIF Search Engine</h2>
-          <br/>
-          <span className="a-project-of">A Project of</span><br/>
-          <img className="ia-img" width="50" height="50" src="assets/internetarchive.svg" />
-          <img width="430" height="77" src="assets/Internet.gif" />
-          <img width="193" height="74" src="assets/archive.gif" />
+          <span className="a-project-of">from the Internet Archive</span><br/>
+          <a href="https://archive.org" target="_blank">
+            <img className="ia-img" width="128" height="128" src="assets/spinning-internetarchive.gif" alt="Internet Archive"/>
+          </a>
           <br/>
           <br/>
           <p>GifCities is a special project of the <a href="https://archive.org" target="_blank">Internet Archive</a> to celebrate 20 years of preserving the web. Internet Archive is a non-profit digital library of millions of free books, movies, software, music, websites, and more. Please <a href="https://archive.org/donate" target="_blank">donate</a> to help us in our efforts to provide “Universal Access to All Knowledge.”</p>
           <br/>
-          <img width="140" height="104" src="assets/tomjerry.gif" />
+          <a href="https://web.archive.org/web/20091027080430/http://www.geocities.com/lady_daisydew/CartoonCapers.html" target="_blank"><img width="140" height="104" src="assets/tomjerry.gif" /></a>
         </div>
       );
     },

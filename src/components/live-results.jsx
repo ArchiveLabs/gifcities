@@ -1,10 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
 import jQuery from 'jquery';
-import Results from './results.jsx';
-import ResultsMasonry from './results-masonry.jsx';
 import ResultsPackery from './results-packery.jsx';
-import ResultsInfinite from './results-infinite.jsx';
 import Loader from './loader.jsx';
 import SearchResultsComponent from './search-results.jsx';
 import TitleText from './title-text.jsx';
