@@ -27,8 +27,7 @@ export default (
       }}
   >
     <Route path="/" component={RootComponent}>
-      <Route path="/20" component={TwentyComponent}></Route>
-      <Route path="/live" component={LiveResultsComponent}></Route>
+      <Route path="/x/live" component={LiveResultsComponent}></Route>
       <Route path="/about-gifcities" component={AboutComponent}></Route>
       <Route path="/" component={HomeComponent}>
         <Route path="/:query" component={SearchResultsComponent}/>

@@ -23,20 +23,19 @@ export default withRouter(
       // pardon my verbose logic... it's late
       if (this.props.notrack !== undefined) {
         if (Number(this.props.notrack) === 1) {
-          url = url + '&notrack=' + Number(this.props.notrack)
+          url = url + '&notrack=1';
         }
       }
+      // console.log(data);
+      if (this.props.randomize == true) {
+        url = url + '&random=1';
+      }
+      // add random seed
+      url = url + '&seed=' + this.props.randomSeed;
 
       jQuery.ajax({
         url: url,
       }).then((data) => {
-        // console.log(data);
-        if (this.props.randomize === true) {
-          // randomize data!
-          data.sort(function() {
-            return .5 - Math.random();
-          });
-        }
         this.setState({results: data, isLoading: false});
       }, () => {
         // TODO display error to user
@@ -57,9 +56,12 @@ export default withRouter(
 
     },
     componentWillReceiveProps(nextProps) {
-      if (this.props.query !== nextProps.query) {
+      if (this.props.randomSeed === nextProps.randomSeed) {
+        return;
+      }
+      if (nextProps.query !== undefined) {
         this.loadResults(nextProps.query);
-      } else if (this.props.params && this.props.params.query !== nextProps.params.query) {
+      } else if (nextProps.params.query !== undefined) {
         this.loadResults(nextProps.params.query);
       }
     },

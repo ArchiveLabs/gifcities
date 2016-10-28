@@ -14,16 +14,11 @@ const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 export default withRouter(
   React.createClass({
     getInitialState() {
-      // Look at cookies...
-      var notrack;
-      if (document.cookie.indexOf('happybirthday') >= 0) {
-        notrack = 0;
-      } else {
-        notrack = 0; // tracking on by default now
-      }
+      var notrack = 0; // tracking on by default now
       return {
         inputValue: this.props.params.query || '',
-        notrack: notrack
+        notrack: notrack,
+        randomSeed: Math.random() * 1000
       };
     },
     handleChange(event) {
@@ -34,10 +29,15 @@ export default withRouter(
         e.preventDefault();
       }
       var val = this.state.inputValue || '';
+      this.setState({
+        inputValue: val,
+        randomSeed: Math.random() * 1000
+      });
       appHistory.push(val);
     },
     componentWillReceiveProps(nextProps) {
-      if (this.props.params.query !== nextProps.params.query) {
+      if (this.props.params.query !== nextProps.params.query &&
+          this.state.inputValue !== nextProps.params.query) {
         this.setState({inputValue: nextProps.params.query});
       }
     },
@@ -67,24 +67,10 @@ export default withRouter(
       if (!this.props.params.query) {
         homeText = this.renderHomeText();
       }
-      var extraGif;
-      if (false && this.state.notrack === 0) {
-        extraGif = <img
-          src="assets/YELLOW_BLINK_0.GIF"
-          width="28"
-          height="28"
-          title="Your queries will be fed into the projection"
-          onClick={()=>{
-            document.cookie = "happybirthday=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-            this.setState({notrack: 1});
-          }}
-        />;
-      }
       return (
         <div className="home">
           <form onSubmit={this.handleSubmit}>
             <div className="search-box-wrapper">
-              {extraGif}
               <div className="search-input-wrapper">
                 <input
                   value={this.state.inputValue}
@@ -101,7 +87,9 @@ export default withRouter(
           {homeText}
           {this.props.children && React.cloneElement(this.props.children, {
             notrack: this.state.notrack,
-            randomize: true
+            randomize: true,
+            randomSeed: this.state.randomSeed,
+            query: this.state.inputValue,
           })}
         </div>
       )
