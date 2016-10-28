@@ -129,7 +129,7 @@ export default withRouter(
         })
       } else {
         // download latest live results
-        var moreUrl = 'http:https://wbgrp-svc060.us.archive.org:8091/api/v1/manager?op=list&start=' + this.time;
+        var moreUrl = 'https://wbgrp-svc060.us.archive.org/api/v1/manager?op=list&start=' + this.time;
         jQuery.getJSON(moreUrl).then((data) => {
           if (data.length > 0) {
             this.time = data[data.length - 1].split('|')[0];

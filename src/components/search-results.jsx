@@ -22,7 +22,9 @@ export default withRouter(
 
       // pardon my verbose logic... it's late
       if (this.props.notrack !== undefined) {
-        url = url + '&notrack=' + Number(this.props.notrack)
+        if (Number(this.props.notrack) === 1) {
+          url = url + '&notrack=' + Number(this.props.notrack)
+        }
       }
 
       jQuery.ajax({

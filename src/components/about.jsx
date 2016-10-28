@@ -29,7 +29,7 @@ export default React.createClass({
         Thanks for the project go first and foremost to the millions of everyday citizens that built such incredible pages and GIFs in Geocities. We also owe special thanks to Yahoo for their guidance and open communication about the GeoCities closure. We also thank the independent volunteer team of archivers at <a href="http://archiveteam.org/">Archive Team</a> for their efforts to <a href="http://archiveteam.org/index.php?title=Geocities">preserve GeoCities</a> and <a href="http://archiveteam.org/index.php?title=Geocities_URL_Lists">contribute URL surveys</a> to the project. Thanks go as well to the efforts of the tireless Internet Archive staff that work to archive and make accessible our ongoing work to preserve the web for both today’s users and for posterity.
         <br/>
         <br/>
-        The Internet Archive GifCities project team was: Vinay Goel (Senior Data Engineer) Jefferson Bailey (Director, Web Archiving), and Richard Caceres (Software Engineer).
+        The Internet Archive GifCities project team was: Vinay Goel (Senior Data Engineer), Jefferson Bailey (Director, Web Archiving), and Richard Caceres (Software Engineer).
         <br/>
         <br/>
         GifCities is part of <a href="https://archivelab.org" target="_blank">Archive Lab</a>.

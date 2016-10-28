@@ -55,6 +55,10 @@ export default withRouter(
           <p>GifCities is a special project of the <a href="https://archive.org" target="_blank">Internet Archive</a> to celebrate 20 years of preserving the web. Internet Archive is a non-profit digital library of millions of free books, movies, software, music, websites, and more. Please <a href="https://archive.org/donate" target="_blank">donate</a> to help us in our efforts to provide “Universal Access to All Knowledge.”</p>
           <br/>
           <a href="https://web.archive.org/web/20091027080430/http://www.geocities.com/lady_daisydew/CartoonCapers.html" target="_blank"><img width="140" height="104" src="assets/tomjerry.gif" /></a>
+          <br/>
+          <br/>
+          <br/>
+          Try <Link to={'snowglobe'}>snowglobe</Link>, <Link to={'butterfly'}>butterfly</Link>, <Link to={'balloons'}>balloons</Link>, <Link to={'star wars'}>star wars</Link>
         </div>
       );
     },
@@ -96,7 +100,8 @@ export default withRouter(
           </form>
           {homeText}
           {this.props.children && React.cloneElement(this.props.children, {
-            notrack: this.state.notrack
+            notrack: this.state.notrack,
+            randomize: true
           })}
         </div>
       )
