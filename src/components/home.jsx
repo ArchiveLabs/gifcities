@@ -87,7 +87,7 @@ export default withRouter(
           {homeText}
           {this.props.children && React.cloneElement(this.props.children, {
             notrack: this.state.notrack,
-            randomize: true,
+            randomize: false,
             randomSeed: this.state.randomSeed,
             query: this.state.inputValue,
           })}
