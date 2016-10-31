@@ -47,8 +47,6 @@ export default withRouter(
       var query;
       if (this.props.query) {
         query = this.props.query;
-      } else {
-        query = this.props.params.query;
       }
       this.loadResults(query);
     },
@@ -61,8 +59,6 @@ export default withRouter(
       }
       if (nextProps.query !== undefined) {
         this.loadResults(nextProps.query);
-      } else if (nextProps.params.query !== undefined) {
-        this.loadResults(nextProps.params.query);
       }
     },
     render() {

@@ -2,27 +2,46 @@ import React from 'react';
 import { Link, withRouter } from 'react-router';
 import jQuery from 'jquery';
 import Loader from './loader.jsx';
+import SearchResults from './search-results.jsx';
+import About from './about.jsx';
 
-// history stuff
-import { browserHistory, hashHistory } from 'react-router';
-import { createHashHistory } from 'history';
-import { useRouterHistory } from 'react-router';
-const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
-
-
-// Note relies on this.props.params.id (set via react-router)
 export default withRouter(
   React.createClass({
     getInitialState() {
       var notrack = 0; // tracking on by default now
+      var initialInputValue = '';
+      if (this.props.location.query.q) {
+        // Support better URL. eg gificities.org?q=snowglobe
+        initialInputValue = this.props.location.query.q;
+      }
       return {
-        inputValue: this.props.params.query || '',
+        inputValue: initialInputValue,
+        searchValue: initialInputValue,
         notrack: notrack,
-        randomSeed: Math.random() * 1000
+        randomSeed: Math.random() * 1000,
       };
     },
-    handleChange(event) {
-      this.setState({inputValue: event.target.value || ''});
+    componentDidMount() {
+      if (this.props.location.hash) {
+       // Backwards compatible for old links (eg gifcities.org/#/snowglobe
+       var initialInputValue = this.props.location.hash.replace('#/', '');
+       //  history.replaceState({}, document.title, "/?q=" + initialInputValue);
+       if (initialInputValue === 'about-gifcities') {
+         this.props.history.push(Object.assign({}, this.props.location, {
+           query: {'about-gifcities': null},
+           hash: ''
+         }));
+       } else {
+         this.props.history.push(Object.assign({}, this.props.location, {
+           query: {q: decodeURIComponent(initialInputValue)},
+           hash: ''
+         }));
+       }
+     }
+    },
+    handleInputChange(e) {
+      e.preventDefault();
+      this.setState({inputValue: e.target.value});
     },
     handleSubmit(e) {
       if (e !== undefined) {
@@ -30,15 +49,22 @@ export default withRouter(
       }
       var val = this.state.inputValue || '';
       this.setState({
-        inputValue: val,
+        searchValue: val,
         randomSeed: Math.random() * 1000
       });
-      appHistory.push(val);
+      var query = {};
+      if (val) {
+        query.q = val;
+      }
+      this.props.history.push(Object.assign({}, this.props.location, {query: query}));
     },
     componentWillReceiveProps(nextProps) {
-      if (this.props.params.query !== nextProps.params.query &&
-          this.state.inputValue !== nextProps.params.query) {
-        this.setState({inputValue: nextProps.params.query});
+      if (this.props.location.query.q !== nextProps.location.query.q &&
+          this.state.inputValue !== nextProps.location.query.q) {
+        this.setState({
+          inputValue: nextProps.location.query.q,
+          searchValue: nextProps.location.query.q
+        });
       }
     },
     renderHomeText() {
@@ -58,15 +84,28 @@ export default withRouter(
           <br/>
           <br/>
           <br/>
-          Try <Link to={'snowglobe'}>snowglobe</Link>, <Link to={'butterfly'}>butterfly</Link>, <Link to={'balloons'}>balloons</Link>, <Link to={'star wars'}>star wars</Link>
+          Try <Link to={'?q=snowglobe'}>snowglobe</Link>, <Link to={'?q=butterfly'}>butterfly</Link>, <Link to={'?q=balloons'}>balloons</Link>, <Link to={'?q=star+wars'}>star wars</Link>
         </div>
       );
     },
     render() {
-      var homeText;
-      if (!this.props.params.query) {
-        homeText = this.renderHomeText();
+      if (this.props.location.query['about-gifcities'] !== undefined) {
+        return <About />;
       }
+      var homeText, searchResults;
+      if (!this.state.searchValue) {
+        homeText = this.renderHomeText();
+      } else {
+        searchResults = (
+          <SearchResults
+            notrack={this.state.notrack}
+            randomize={false}
+            randomSeed={this.state.randomSeed}
+            query={this.state.searchValue}
+          />
+        );
+      }
+
       return (
         <div className="home">
           <form onSubmit={this.handleSubmit}>
@@ -74,7 +113,7 @@ export default withRouter(
               <div className="search-input-wrapper">
                 <input
                   value={this.state.inputValue}
-                  onChange={this.handleChange}
+                  onChange={this.handleInputChange}
                   className="search-input"
                   type="text"
                 />
@@ -85,12 +124,7 @@ export default withRouter(
             </div>
           </form>
           {homeText}
-          {this.props.children && React.cloneElement(this.props.children, {
-            notrack: this.state.notrack,
-            randomize: false,
-            randomSeed: this.state.randomSeed,
-            query: this.state.inputValue,
-          })}
+          {searchResults}
         </div>
       )
     }

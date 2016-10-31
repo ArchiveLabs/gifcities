@@ -17,7 +17,7 @@ export default React.createClass({
       <div className="header">
         <div className="links">
           <Link to={'/'}><span className="logo">Home</span></Link>
-          <Link to={'/about-gifcities'}>About</Link>
+          <Link to={'/?about-gifcities'}>About</Link>
           <a className="donate" target="_blank" href="https://archive.org/donate/" title="Donate to Internet Archive">$$</a>
         </div>
         {IaLogo}

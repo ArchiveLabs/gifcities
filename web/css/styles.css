@@ -89,11 +89,15 @@ h1 {
 .loader {
   text-align:center;
   margin: 100px 32px 32px 32px;
+  z-index:999;
 }
 .results-wrapper .loader {
   margin: 32px;
   top: 100px;
   position: relative;
+}
+.VisibilitySensor .loader {
+
 }
 
 .VisibilitySensor {
