@@ -17,7 +17,7 @@ export default withRouter(
     loadResults(query) {
       this.setState({isLoading: true, results: [], isError: false});
 
-      var url = 'https://wbgrp-svc060.us.archive.org/api/v1/gifsearch?q=';
+      var url = 'https://gifcities.archive.org/api/v1/gifsearch?q=';
       url = url + encodeURIComponent(query);
 
       // pardon my verbose logic... it's late

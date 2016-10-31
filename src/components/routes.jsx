@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  browserHistory, Router, Route, IndexRoute
+  //browserHistory,
+  Router, Route, IndexRoute
 } from 'react-router';
 import RootComponent from './root.jsx';
 import HomeComponent from './home.jsx';
@@ -12,6 +13,13 @@ import jQuery from 'jquery';
 //import { createHashHistory } from 'history';
 //import { useRouterHistory } from 'react-router';
 //const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+
+
+import { createHistory } from 'history';
+import { useRouterHistory } from 'react-router';
+const browserHistory = useRouterHistory(createHistory)({
+  // basename: '/~richard/projectx'
+});
 
 export default (
   <Router
