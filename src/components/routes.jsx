@@ -6,7 +6,6 @@ import {
 import RootComponent from './root.jsx';
 import HomeComponent from './home.jsx';
 import SearchResultsComponent from './search-results.jsx';
-import LiveResultsComponent from './live-results.jsx';
 import jQuery from 'jquery';
 
 
@@ -24,13 +23,14 @@ const browserHistory = useRouterHistory(createHistory)({
 export default (
   <Router
       history={browserHistory}
-      onUpdate={() => {
+      onUpdate={function() {
         window.scrollTo(0, 0);
-        document.body.className = window.location.hash.replace('#', 'hash').replace('/', 'slash');
+        // for legacy reasons, keep a hash for className
+        var path = '#' + this.state.location.pathname;
+        document.body.className = path.replace('#', 'hash').replace('/', 'slash');
       }}
   >
     <Route path="/" component={RootComponent}>
-      <Route path="/x/live" component={LiveResultsComponent}></Route>
       <IndexRoute component={HomeComponent} />
     </Route>
   </Router>

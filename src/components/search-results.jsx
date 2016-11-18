@@ -50,14 +50,10 @@ export default withRouter(
       }
       this.loadResults(query);
     },
-    componentWillUnmount() {
-
-    },
     componentWillReceiveProps(nextProps) {
-      if (this.props.randomSeed === nextProps.randomSeed) {
-        return;
-      }
-      if (nextProps.query !== undefined) {
+      if (nextProps.query !== undefined &&
+        (nextProps.query !== this.props.query || this.props.randomSeed !== nextProps.randomSeed)
+      ) {
         this.loadResults(nextProps.query);
       }
     },

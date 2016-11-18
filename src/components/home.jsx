@@ -4,6 +4,7 @@ import jQuery from 'jquery';
 import Loader from './loader.jsx';
 import SearchResults from './search-results.jsx';
 import About from './about.jsx';
+import LiveResults from './live-results.jsx';
 
 export default withRouter(
   React.createClass({
@@ -30,6 +31,11 @@ export default withRouter(
          this.props.history.push(Object.assign({}, this.props.location, {
            query: {'about-gifcities': null},
            hash: ''
+         }));
+       } else if (initialInputValue === 'live') {
+         this.props.history.push(Object.assign({}, this.props.location, {
+           query: {'live': null},
+           hash: '',
          }));
        } else {
          this.props.history.push(Object.assign({}, this.props.location, {
@@ -91,6 +97,8 @@ export default withRouter(
     render() {
       if (this.props.location.query['about-gifcities'] !== undefined) {
         return <About />;
+      } else if (this.props.location.query['live'] !== undefined) {
+        return <LiveResults />;
       }
       var homeText, searchResults;
       if (!this.state.searchValue) {
