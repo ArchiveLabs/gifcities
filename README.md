@@ -5,20 +5,21 @@ npm install -g grunt
 npm install
 ```
 
+### Building using npm
 
-### Using Grunt
 ```
 # Build once
-grunt
+npm run build
 
 # Watch files and build on changes
-grunt watch
+npm run watch
 ```
+
 
 ## Authors
 
-- Richard@archive.org  
-- Vinay@archive.org  
+- Richard@archive.org
+- Vinay@archive.org
 
 
 ## References
