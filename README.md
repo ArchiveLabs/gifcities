@@ -1,3 +1,7 @@
+Check it out: https://gifcities.org
+
+![Internet Archive spinning](web/assets/spinning-internetarchive.gif)
+
 ## Setup
 
 ```
@@ -18,8 +22,8 @@ npm run watch
 
 ## Authors
 
-- Richard@archive.org
-- Vinay@archive.org
+- Richard Caceres – [@rchrd2](https://github.com/rchrd2)
+- Vinay Goel – [@vinaygoel](https://github.com/vinaygoel)
 
 
 ## References
